@@ -1,0 +1,105 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import LinkRow from '../../components/content/LinkRow.astro';
+import TechStackPills from '../../components/content/TechStackPills.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+const pageTitle = `${project.data.title} | Projects | JP Davalos`;
+const pageDescription = project.data.summary;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <div class="space-y-8">
+    <a
+      href="/projects"
+      class="inline-flex items-center gap-2 text-sm text-[var(--muted)] transition-colors hover:text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
+    >
+      <span aria-hidden="true">←</span>
+      <span>Back to Projects</span>
+    </a>
+
+    <header class="space-y-5 rounded-2xl bg-[var(--surface)] p-5 sm:p-6">
+      <div class="space-y-2">
+        <p class="text-sm text-[var(--muted)]">{project.data.date}</p>
+        <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">
+          {project.data.title}
+        </h1>
+        <p class="text-base leading-7 text-[var(--muted)]">{project.data.summary}</p>
+      </div>
+
+      <LinkRow links={project.data.links} />
+      <TechStackPills items={project.data.stack} />
+
+      <div class="space-y-4">
+        <figure class="overflow-hidden rounded-xl bg-black/30">
+          <img
+            src={project.data.poster}
+            alt={`${project.data.title} poster`}
+            loading="lazy"
+            class="aspect-[16/10] w-full object-cover"
+          />
+        </figure>
+      </div>
+    </header>
+
+    <article class="project-detail-body">
+      <Content />
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .project-detail-body {
+    color: var(--text);
+  }
+
+  .project-detail-body :global(h2) {
+    margin: 2rem 0 0.75rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .project-detail-body :global(p),
+  .project-detail-body :global(li) {
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .project-detail-body :global(p) {
+    margin: 0 0 1rem;
+  }
+
+  .project-detail-body :global(ul),
+  .project-detail-body :global(ol) {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  .project-detail-body :global(a) {
+    color: var(--accent);
+  }
+  
+  .project-detail-body :global(video) {
+    width: 100%;
+    border-radius: 0.75rem;
+    background: rgb(0 0 0 / 0.2);
+  }
+</style>
