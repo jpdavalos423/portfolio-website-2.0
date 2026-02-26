@@ -1,16 +1,47 @@
 ---
+import { getCollection } from 'astro:content';
+import ExperienceCard from '../components/cards/ExperienceCard.astro';
+import ProjectCard from '../components/cards/ProjectCard.astro';
+import LinkRow from '../components/content/LinkRow.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  compareExperienceStartDesc,
+  compareProjectDateDesc,
+} from '../lib/collections';
+
+const [projectSample] = (await getCollection('projects')).sort(
+  compareProjectDateDesc,
+);
+const [experienceSample] = (await getCollection('experience')).sort(
+  compareExperienceStartDesc,
+);
 ---
 
 <BaseLayout
   title="Portfolio"
   description="Personal portfolio website scaffold with Astro, TypeScript, and Tailwind."
 >
-  <section class="space-y-3 py-8">
-    <p class="text-sm text-[var(--muted)]">Phase 2 Layout Shell</p>
-    <h1 class="text-3xl font-semibold tracking-tight">Base layout, nav, footer, and SEO are wired up.</h1>
-    <p class="text-base text-[var(--muted)]">
-      This placeholder content verifies the shared shell renders statically with dark styling and no client-side JS.
-    </p>
+  <section class="space-y-6 py-8">
+    <div class="space-y-3">
+      <p class="text-sm text-[var(--muted)]">Phase 4 Component Preview</p>
+      <h1 class="text-3xl font-semibold tracking-tight">
+        Shared content components and cards are wired up.
+      </h1>
+      <p class="text-base text-[var(--muted)]">
+        This is a temporary preview for Phase 4 validation only. It is not the final homepage layout.
+      </p>
+      <LinkRow
+        links={[
+          { label: 'Projects', url: '/projects' },
+          { label: 'Experience', url: '/experience' },
+          { label: 'Contact', url: '/contact' },
+        ]}
+      />
+    </div>
+
+    <div class="grid gap-6">
+      {projectSample && <ProjectCard project={projectSample} interactive={false} />}
+      {experienceSample && <ExperienceCard experience={experienceSample} />}
+    </div>
   </section>
 </BaseLayout>
