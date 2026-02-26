@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { compareProjectDateDesc } from '../../lib/collections';
+import ProjectCard from '../cards/ProjectCard.astro';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+
+const sortedProjects = [...projects].sort(compareProjectDateDesc);
+const featured = sortedProjects.filter((project) => project.data.featured);
+const featuredIds = new Set(featured.map((project) => project.id));
+const fallback = sortedProjects.filter(
+  (project) => !featuredIds.has(project.id),
+);
+const selected = [...featured, ...fallback].slice(0, 3);
+---
+
+<section class="space-y-6 py-8" aria-labelledby="selected-work-heading">
+  <div class="flex flex-wrap items-end justify-between gap-3">
+    <div class="space-y-2">
+      <p class="text-sm text-[var(--muted)]">Selected Work</p>
+      <h2 id="selected-work-heading" class="text-2xl font-semibold tracking-tight">
+        Featured projects
+      </h2>
+    </div>
+
+    <a
+      href="/projects"
+      class="text-sm text-[var(--accent)] transition-colors hover:text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
+    >
+      View all projects
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    {selected.map((project) => <ProjectCard project={project} interactive={false} />)}
+  </div>
+</section>

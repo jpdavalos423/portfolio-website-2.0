@@ -1,0 +1,32 @@
+---
+import LinkRow from '../content/LinkRow.astro';
+
+const socialLinks = [
+  { label: 'GitHub', url: 'https://github.com/' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/' },
+  { label: 'Resume', url: '/resume.pdf' },
+];
+---
+
+<section class="space-y-5 py-8" aria-labelledby="contact-section-heading">
+  <div class="space-y-2">
+    <p class="text-sm text-[var(--muted)]">Contact</p>
+    <h2 id="contact-section-heading" class="text-2xl font-semibold tracking-tight">
+      Let&apos;s build something useful.
+    </h2>
+    <p class="max-w-2xl text-sm text-[var(--muted)] sm:text-base">
+      I&apos;m open to software engineering roles and conversations about platform, product systems, and applied AI tooling.
+    </p>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-4">
+    <a
+      href="mailto:hello@example.com"
+      class="inline-flex items-center rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-medium text-black transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
+    >
+      Email Me
+    </a>
+
+    <LinkRow links={socialLinks} />
+  </div>
+</section>

@@ -1,0 +1,53 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { compareExperienceStartDesc } from '../../lib/collections';
+
+interface Props {
+  experiences: CollectionEntry<'experience'>[];
+}
+
+const { experiences } = Astro.props;
+
+const items = [...experiences].sort(compareExperienceStartDesc).slice(0, 4);
+
+const formatPeriod = (entry: CollectionEntry<'experience'>) =>
+  `${entry.data.start} - ${entry.data.present ? 'Present' : entry.data.end}`;
+---
+
+<section class="space-y-5 py-8" aria-labelledby="experience-snapshot-heading">
+  <div class="flex flex-wrap items-end justify-between gap-3">
+    <div class="space-y-2">
+      <p class="text-sm text-[var(--muted)]">Experience Snapshot</p>
+      <h2 id="experience-snapshot-heading" class="text-2xl font-semibold tracking-tight">
+        Recent roles and leadership
+      </h2>
+    </div>
+
+    <a
+      href="/experience"
+      class="text-sm text-[var(--accent)] transition-colors hover:text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
+    >
+      View experience
+    </a>
+  </div>
+
+  <ul class="space-y-3">
+    {items.map((entry) => (
+      <li class="rounded-xl bg-[var(--surface)] px-4 py-3">
+        <a
+          href={`/experience/${entry.slug}`}
+          class="block space-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface)]"
+        >
+          <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span class="text-sm font-medium text-[var(--text)]">{entry.data.role}</span>
+            <span class="text-sm text-[var(--muted)]">@ {entry.data.org}</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--muted)]">
+            <span>{formatPeriod(entry)}</span>
+            <span class="uppercase tracking-wide text-[var(--accent)]">{entry.data.type}</span>
+          </div>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>

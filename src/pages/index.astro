@@ -1,47 +1,21 @@
 ---
 import { getCollection } from 'astro:content';
-import ExperienceCard from '../components/cards/ExperienceCard.astro';
-import ProjectCard from '../components/cards/ProjectCard.astro';
-import LinkRow from '../components/content/LinkRow.astro';
+import ContactSection from '../components/home/ContactSection.astro';
+import ExperienceSnapshot from '../components/home/ExperienceSnapshot.astro';
+import Hero from '../components/home/Hero.astro';
+import SelectedWork from '../components/home/SelectedWork.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import {
-  compareExperienceStartDesc,
-  compareProjectDateDesc,
-} from '../lib/collections';
 
-const [projectSample] = (await getCollection('projects')).sort(
-  compareProjectDateDesc,
-);
-const [experienceSample] = (await getCollection('experience')).sort(
-  compareExperienceStartDesc,
-);
+const projects = await getCollection('projects');
+const experiences = await getCollection('experience');
 ---
 
 <BaseLayout
   title="Portfolio"
-  description="Personal portfolio website scaffold with Astro, TypeScript, and Tailwind."
+  description="Software engineer portfolio featuring selected projects, experience, and contact information."
 >
-  <section class="space-y-6 py-8">
-    <div class="space-y-3">
-      <p class="text-sm text-[var(--muted)]">Phase 4 Component Preview</p>
-      <h1 class="text-3xl font-semibold tracking-tight">
-        Shared content components and cards are wired up.
-      </h1>
-      <p class="text-base text-[var(--muted)]">
-        This is a temporary preview for Phase 4 validation only. It is not the final homepage layout.
-      </p>
-      <LinkRow
-        links={[
-          { label: 'Projects', url: '/projects' },
-          { label: 'Experience', url: '/experience' },
-          { label: 'Contact', url: '/contact' },
-        ]}
-      />
-    </div>
-
-    <div class="grid gap-6">
-      {projectSample && <ProjectCard project={projectSample} interactive={false} />}
-      {experienceSample && <ExperienceCard experience={experienceSample} />}
-    </div>
-  </section>
+  <Hero />
+  <SelectedWork projects={projects} />
+  <ExperienceSnapshot experiences={experiences} />
+  <ContactSection />
 </BaseLayout>
