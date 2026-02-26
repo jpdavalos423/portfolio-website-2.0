@@ -14,12 +14,13 @@ const isActive = (href: string) =>
 <nav class="mx-auto flex w-full max-w-3xl items-center justify-between px-6 py-5">
   <a
     href="/"
+    aria-label="JP Davalos home"
     class:list={[
-      'text-sm font-semibold tracking-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
-      pathname === '/' ? 'text-[var(--text)]' : 'text-[var(--text)] hover:text-[var(--accent)]',
+      'inline-flex h-14 w-14 items-center justify-center rounded-sm transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
+      pathname === '/' ? 'opacity-100' : 'opacity-90 hover:opacity-100',
     ]}
   >
-    JP Davalos
+    <img src="/logo-nav.svg" alt="" class="h-13 w-13" />
   </a>
 
   <ul class="flex items-center gap-5">

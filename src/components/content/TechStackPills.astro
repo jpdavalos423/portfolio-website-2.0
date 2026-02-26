@@ -1,16 +1,28 @@
 ---
 interface Props {
   items: string[];
+  singleLine?: boolean;
 }
 
-const { items } = Astro.props;
+const { items, singleLine = false } = Astro.props;
 ---
 
 {
   items.length > 0 && (
-    <ul class="flex flex-wrap gap-2" aria-label="Technology stack">
+    <ul
+      class:list={[
+        'flex gap-2',
+        singleLine ? 'flex-nowrap overflow-hidden' : 'flex-wrap',
+      ]}
+      aria-label="Technology stack"
+    >
       {items.map((item) => (
-        <li class="rounded-full bg-[var(--surface)] px-3 py-1 text-xs text-[var(--muted)]">
+        <li
+          class:list={[
+            'rounded-full bg-[var(--surface)] px-3 py-1 text-xs text-[var(--muted)]',
+            singleLine && 'shrink-0 whitespace-nowrap',
+          ]}
+        >
           {item}
         </li>
       ))}
