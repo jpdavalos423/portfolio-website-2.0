@@ -21,6 +21,8 @@ const { experience } = Astro.props;
 const { Content } = await experience.render();
 const endLabel = experience.data.present ? 'Present' : experience.data.end;
 const period = `${experience.data.start} - ${endLabel}`;
+const typeLabel =
+  experience.data.type === 'industry' ? 'professional' : experience.data.type;
 
 const title = `${experience.data.role} @ ${experience.data.org} | Experience | JP Davalos`;
 const description = `${experience.data.role} at ${experience.data.org} (${period}).`;
@@ -44,7 +46,7 @@ const description = `${experience.data.role} at ${experience.data.org} (${period
         </div>
         <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[var(--muted)]">
           <span>{period}</span>
-          <span class="uppercase tracking-wide text-[var(--accent)]">{experience.data.type}</span>
+          <span class="uppercase tracking-wide text-[var(--accent)]">{typeLabel}</span>
         </div>
       </div>
 

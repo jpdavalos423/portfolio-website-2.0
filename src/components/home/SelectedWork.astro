@@ -15,7 +15,7 @@ const featuredIds = new Set(featured.map((project) => project.id));
 const fallback = sortedProjects.filter(
   (project) => !featuredIds.has(project.id),
 );
-const selected = [...featured, ...fallback].slice(0, 3);
+const selected = [...featured, ...fallback].slice(0, 2);
 ---
 
 <section class="space-y-6 py-8" aria-labelledby="selected-work-heading">

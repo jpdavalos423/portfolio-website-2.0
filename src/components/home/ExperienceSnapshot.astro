@@ -8,10 +8,13 @@ interface Props {
 
 const { experiences } = Astro.props;
 
-const items = [...experiences].sort(compareExperienceStartDesc).slice(0, 4);
+const items = [...experiences].sort(compareExperienceStartDesc).slice(0, 3);
 
 const formatPeriod = (entry: CollectionEntry<'experience'>) =>
   `${entry.data.start} - ${entry.data.present ? 'Present' : entry.data.end}`;
+
+const formatTypeLabel = (entry: CollectionEntry<'experience'>) =>
+  entry.data.type === 'industry' ? 'professional' : entry.data.type;
 ---
 
 <section class="space-y-5 py-8" aria-labelledby="experience-snapshot-heading">
@@ -44,7 +47,7 @@ const formatPeriod = (entry: CollectionEntry<'experience'>) =>
           </div>
           <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--muted)]">
             <span>{formatPeriod(entry)}</span>
-            <span class="uppercase tracking-wide text-[var(--accent)]">{entry.data.type}</span>
+            <span class="uppercase tracking-wide text-[var(--accent)]">{formatTypeLabel(entry)}</span>
           </div>
         </a>
       </li>
