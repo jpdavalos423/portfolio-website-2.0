@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import ExperienceCard from '../../components/cards/ExperienceCard.astro';
+import ExperienceSubnav from '../../components/nav/ExperienceSubnav.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { compareExperienceStartDesc } from '../../lib/collections';
+
+const experiences = (await getCollection('experience')).sort(compareExperienceStartDesc);
+const featured = experiences.filter((entry) => entry.data.featured);
+const featuredSlugs = new Set(featured.map((entry) => entry.slug));
+const recent = experiences.filter((entry) => !featuredSlugs.has(entry.slug)).slice(0, 3);
+---
+
+<BaseLayout title="Experience | JP Davalos" description="Industry, research, and leadership experience.">
+  <div class="space-y-8">
+    <header class="space-y-3">
+      <p class="text-sm text-[var(--muted)]">Experience</p>
+      <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Work, research, and leadership</h1>
+      <p class="max-w-2xl text-base leading-7 text-[var(--muted)]">
+        A curated view of featured roles plus recent experience. Use the route tabs to browse all entries or filter
+        by category.
+      </p>
+    </header>
+
+    <ExperienceSubnav />
+
+    <section class="space-y-5" aria-labelledby="experience-featured-heading">
+      <div class="space-y-2">
+        <p class="text-sm text-[var(--muted)]">Featured</p>
+        <h2 id="experience-featured-heading" class="text-2xl font-semibold tracking-tight">
+          Selected experience
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 gap-6">
+        {featured.map((entry) => <ExperienceCard experience={entry} />)}
+      </div>
+    </section>
+
+    <section class="space-y-5" aria-labelledby="experience-recent-heading">
+      <div class="space-y-2">
+        <p class="text-sm text-[var(--muted)]">Recent</p>
+        <h2 id="experience-recent-heading" class="text-2xl font-semibold tracking-tight">
+          Additional recent roles
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 gap-6">
+        {recent.map((entry) => <ExperienceCard experience={entry} />)}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

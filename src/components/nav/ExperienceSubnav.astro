@@ -1,0 +1,38 @@
+---
+const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+
+const links = [
+  { href: '/experience', label: 'Overview' },
+  { href: '/experience/all', label: 'All' },
+  { href: '/experience/industry', label: 'Industry' },
+  { href: '/experience/research', label: 'Research' },
+  { href: '/experience/leadership', label: 'Leadership' },
+];
+---
+
+<nav aria-label="Experience sections" class="rounded-xl bg-[var(--surface)] p-2">
+  <ul class="flex flex-wrap gap-2">
+    {
+      links.map((link) => {
+        const isActive = pathname === link.href;
+
+        return (
+          <li>
+            <a
+              href={link.href}
+              aria-current={isActive ? 'page' : undefined}
+              class:list={[
+                'inline-flex rounded-lg px-3 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface)]',
+                isActive
+                  ? 'bg-black/20 text-[var(--accent)]'
+                  : 'text-[var(--muted)] hover:text-[var(--text)]',
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>

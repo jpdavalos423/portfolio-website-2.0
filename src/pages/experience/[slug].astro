@@ -1,0 +1,93 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import LinkRow from '../../components/content/LinkRow.astro';
+import TechStackPills from '../../components/content/TechStackPills.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+interface Props {
+  experience: CollectionEntry<'experience'>;
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection('experience');
+
+  return entries.map((experience) => ({
+    params: { slug: experience.slug },
+    props: { experience },
+  }));
+}
+
+const { experience } = Astro.props;
+const { Content } = await experience.render();
+const endLabel = experience.data.present ? 'Present' : experience.data.end;
+const period = `${experience.data.start} - ${endLabel}`;
+
+const title = `${experience.data.role} @ ${experience.data.org} | Experience | JP Davalos`;
+const description = `${experience.data.role} at ${experience.data.org} (${period}).`;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="space-y-8">
+    <a
+      href="/experience"
+      class="inline-flex items-center gap-2 text-sm text-[var(--muted)] transition-colors hover:text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
+    >
+      <span aria-hidden="true">←</span>
+      <span>Back to Experience</span>
+    </a>
+
+    <header class="space-y-5 rounded-2xl bg-[var(--surface)] p-5 sm:p-6">
+      <div class="space-y-2">
+        <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">{experience.data.role}</h1>
+          <span class="text-base text-[var(--muted)]">@ {experience.data.org}</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[var(--muted)]">
+          <span>{period}</span>
+          <span class="uppercase tracking-wide text-[var(--accent)]">{experience.data.type}</span>
+        </div>
+      </div>
+
+      {experience.data.links && experience.data.links.length > 0 && <LinkRow links={experience.data.links} />}
+      <TechStackPills items={experience.data.stack} />
+    </header>
+
+    <article class="experience-detail-body">
+      <Content />
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .experience-detail-body {
+    color: var(--text);
+  }
+
+  .experience-detail-body :global(h2) {
+    margin: 2rem 0 0.75rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .experience-detail-body :global(p),
+  .experience-detail-body :global(li) {
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .experience-detail-body :global(p) {
+    margin: 0 0 1rem;
+  }
+
+  .experience-detail-body :global(ul),
+  .experience-detail-body :global(ol) {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  .experience-detail-body :global(a) {
+    color: var(--accent);
+  }
+</style>

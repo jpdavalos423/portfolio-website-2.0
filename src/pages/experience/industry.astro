@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import ExperienceCard from '../../components/cards/ExperienceCard.astro';
+import ExperienceSubnav from '../../components/nav/ExperienceSubnav.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { compareExperienceStartDesc } from '../../lib/collections';
+
+const items = (await getCollection('experience'))
+  .filter((entry) => entry.data.type === 'industry')
+  .sort(compareExperienceStartDesc);
+---
+
+<BaseLayout title="Industry Experience | JP Davalos" description="Industry experience entries.">
+  <div class="space-y-8">
+    <header class="space-y-3">
+      <p class="text-sm text-[var(--muted)]">Experience</p>
+      <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">Industry</h1>
+      <p class="max-w-2xl text-base leading-7 text-[var(--muted)]">
+        Industry roles sorted by start date, newest first.
+      </p>
+    </header>
+
+    <ExperienceSubnav />
+
+    <div class="grid grid-cols-1 gap-6">
+      {items.map((entry) => <ExperienceCard experience={entry} />)}
+    </div>
+  </div>
+</BaseLayout>

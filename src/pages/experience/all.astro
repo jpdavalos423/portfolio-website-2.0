@@ -1,0 +1,43 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import ExperienceCard from '../../components/cards/ExperienceCard.astro';
+import ExperienceSubnav from '../../components/nav/ExperienceSubnav.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { compareExperienceStartDesc } from '../../lib/collections';
+
+const experiences = (await getCollection('experience')).sort(compareExperienceStartDesc);
+
+const grouped = experiences.reduce<Record<string, CollectionEntry<'experience'>[]>>((acc, entry) => {
+  const year = entry.data.start.slice(0, 4);
+  acc[year] ??= [];
+  acc[year].push(entry);
+  return acc;
+}, {});
+
+const years = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+---
+
+<BaseLayout title="All Experience | JP Davalos" description="All experience entries grouped by year.">
+  <div class="space-y-8">
+    <header class="space-y-3">
+      <p class="text-sm text-[var(--muted)]">Experience</p>
+      <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">All experience</h1>
+      <p class="max-w-2xl text-base leading-7 text-[var(--muted)]">All roles grouped by start year, newest first.</p>
+    </header>
+
+    <ExperienceSubnav />
+
+    <div class="space-y-8">
+      {years.map((year) => (
+        <section class="space-y-4" aria-labelledby={`year-${year}`}>
+          <h2 id={`year-${year}`} class="text-2xl font-semibold tracking-tight">
+            {year}
+          </h2>
+          <div class="grid grid-cols-1 gap-6">
+            {grouped[year].map((entry) => <ExperienceCard experience={entry} />)}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
