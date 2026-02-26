@@ -1,4 +1,6 @@
 ---
+import AnimatedLogo from './AnimatedLogo.astro';
+
 const pathname = Astro.url.pathname;
 
 const links = [
@@ -16,11 +18,11 @@ const isActive = (href: string) =>
     href="/"
     aria-label="JP Davalos home"
     class:list={[
-      'inline-flex h-14 w-14 items-center justify-center rounded-sm transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
+      'logo-trigger inline-flex h-14 w-14 items-center justify-center rounded-sm transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
       pathname === '/' ? 'opacity-100' : 'opacity-90 hover:opacity-100',
     ]}
   >
-    <img src="/logo-nav.svg" alt="" class="h-13 w-13" />
+    <AnimatedLogo />
   </a>
 
   <ul class="flex items-center gap-5">
@@ -31,7 +33,7 @@ const isActive = (href: string) =>
             href={link.href}
             aria-current={isActive(link.href) ? 'page' : undefined}
             class:list={[
-              'text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
+              'link-underline text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
               isActive(link.href)
                 ? 'text-[var(--accent)]'
                 : 'text-[var(--muted)] hover:text-[var(--accent)]',

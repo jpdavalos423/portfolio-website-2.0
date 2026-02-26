@@ -4,6 +4,7 @@
   color-scheme: dark;
   --bg: #0b0d10;
   --surface: #141821;
+  --border: rgb(255 255 255 / 0.06);
   --text: #edf1f7;
   --muted: #9aa4b2;
   --accent: #59b3ff;
@@ -44,6 +45,32 @@ canvas {
 
 a:not([class]) {
   color: var(--accent);
+}
+
+.link-underline {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -0.15em;
+  height: 1px;
+  pointer-events: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 150ms ease-out;
+}
+
+.link-underline:hover::after,
+.link-underline:focus-visible::after,
+.link-underline[aria-current="page"]::after {
+  background-size: 100% 1px;
 }
 
 :target {

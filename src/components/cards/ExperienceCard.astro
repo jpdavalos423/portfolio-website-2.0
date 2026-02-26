@@ -15,7 +15,9 @@ const highlights = experience.data.highlights.slice(0, 3);
 const typeLabel = experience.data.type === 'industry' ? 'professional' : experience.data.type;
 ---
 
-<article class="rounded-2xl bg-[var(--surface)] p-4 sm:p-6 lg:p-7">
+<article
+  class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 transition-all duration-150 ease-out motion-safe:hover:-translate-y-1 hover:border-white/15 focus-within:border-white/15 sm:p-6 lg:p-7"
+>
   <a
     href={href}
     class="block space-y-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface)] sm:space-y-5"

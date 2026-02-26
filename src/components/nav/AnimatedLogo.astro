@@ -1,0 +1,192 @@
+---
+const LOGO_PATH =
+  'm478.8 442.1l-0.3 229c-29.4-26.7-52.8-48-71-64.5-18.1-16.6-41.3-37.8-51.5-47.2l-18.5-17.2c-13.2 11.7-23.3 20.6-31 27.3-7.7 6.7-15.4 13.4-17 14.7l-3 2.5c6.9 6 21.6 19.5 37 33.8 15.4 14.3 33 30.5 39 36 6.1 5.5 17.1 15.6 24.5 22.5 7.4 6.9 23.8 22 36.5 33.5 12.6 11.6 26.6 24.4 31 28.5 4.4 4.1 15.7 14.5 25 23 9.3 8.5 22.8 20.9 30 27.5 7.1 6.6 13.8 12.7 14.8 13.5 1.8 1.5 1.9-3.5 1.8-155.8l-0.1-157.2 16.1-14.5c-0.5-147.6-0.5-190.5-0.4-190.5 0.2 0 13.5 11.8 29.5 26.2 16.1 14.4 37.8 34.1 48.3 43.7 10.5 9.6 23 21.3 28 25.9l9 8.4c-9.3 8.8-25.7 23.7-42.5 38.8-16.8 15.1-40.8 36.5-53.3 47.5l-22.6 20c-0.1 60.1 0.1 77.5 0.4 77.5 0.3 0 19.7-17.3 43.2-38.4 23.6-21.1 50.7-45.5 60.3-54.1 9.6-8.7 25.8-23.2 36-32.4 10.2-9.1 27.5-24.7 38.5-34.7 11-10 21.4-19.3 23-20.7l3-2.6c-10.8-9.8-19.6-17.8-26.5-24.1-6.9-6.3-21.3-19.4-32-29.1-10.7-9.7-32.1-29-47.5-43-15.4-14-39.3-35.5-53-47.9-13.7-12.4-27.9-25.3-31.5-28.7l-6.5-6.2-66.5-0.1z';
+const ARROW_PATH =
+  'M610 220L350 512L610 804L674 748L498 556H760V468H498L674 276L610 220Z';
+---
+
+<svg
+  class="animated-logo"
+  viewBox="0 0 1024 1024"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  <path class="animated-logo__shape" fill="#fbfbfb" d={LOGO_PATH} />
+  <defs>
+    <path class="animated-logo__logo-source" d={LOGO_PATH} />
+    <path class="animated-logo__arrow-source" d={ARROW_PATH} />
+  </defs>
+</svg>
+
+<script>
+  const SAMPLE_COUNT = 96;
+  const DURATION_MS = 280;
+
+  const ease = (t) => {
+    const p1x = 0.22;
+    const p1y = 1;
+    const p2x = 0.36;
+    const p2y = 1;
+    const cx = 3 * p1x;
+    const bx = 3 * (p2x - p1x) - cx;
+    const ax = 1 - cx - bx;
+    const cy = 3 * p1y;
+    const by = 3 * (p2y - p1y) - cy;
+    const ay = 1 - cy - by;
+    const sampleX = (u) => ((ax * u + bx) * u + cx) * u;
+    const sampleY = (u) => ((ay * u + by) * u + cy) * u;
+    const sampleDX = (u) => (3 * ax * u + 2 * bx) * u + cx;
+
+    let u = t;
+    for (let i = 0; i < 6; i += 1) {
+      const x = sampleX(u) - t;
+      const dx = sampleDX(u);
+      if (Math.abs(x) < 1e-6 || Math.abs(dx) < 1e-6) {
+        break;
+      }
+      u -= x / dx;
+    }
+    if (u < 0) u = 0;
+    if (u > 1) u = 1;
+    return sampleY(u);
+  };
+
+  const toPath = (points) => {
+    if (!points.length) return '';
+    let d = `M${points[0][0]} ${points[0][1]}`;
+    for (let i = 1; i < points.length; i += 1) {
+      d += `L${points[i][0]} ${points[i][1]}`;
+    }
+    return `${d}Z`;
+  };
+
+  const samplePoints = (pathNode, count) => {
+    const length = pathNode.getTotalLength();
+    const points = [];
+    for (let i = 0; i < count; i += 1) {
+      const t = i / (count - 1);
+      const point = pathNode.getPointAtLength(t * length);
+      points.push([point.x, point.y]);
+    }
+    return points;
+  };
+
+  const rotate = (points, shift) => {
+    const len = points.length;
+    if (!len) return points;
+    const offset = ((shift % len) + len) % len;
+    return points.slice(offset).concat(points.slice(0, offset));
+  };
+
+  const alignPoints = (source, target) => {
+    const stride = 6;
+    let best = target;
+    let bestScore = Number.POSITIVE_INFINITY;
+
+    const scoreCandidate = (candidate) => {
+      let sum = 0;
+      for (let i = 0; i < source.length; i += stride) {
+        const dx = source[i][0] - candidate[i][0];
+        const dy = source[i][1] - candidate[i][1];
+        sum += dx * dx + dy * dy;
+      }
+      return sum;
+    };
+
+    const reversed = [...target].reverse();
+    for (const base of [target, reversed]) {
+      for (let shift = 0; shift < source.length; shift += 1) {
+        const candidate = rotate(base, shift);
+        const score = scoreCandidate(candidate);
+        if (score < bestScore) {
+          bestScore = score;
+          best = candidate;
+        }
+      }
+    }
+
+    return best;
+  };
+
+  const interpolate = (from, to, progress) => {
+    const points = [];
+    for (let i = 0; i < from.length; i += 1) {
+      points.push([
+        from[i][0] + (to[i][0] - from[i][0]) * progress,
+        from[i][1] + (to[i][1] - from[i][1]) * progress,
+      ]);
+    }
+    return points;
+  };
+
+  const setupMorph = (svg) => {
+    const shape = svg.querySelector('.animated-logo__shape');
+    const logoSource = svg.querySelector('.animated-logo__logo-source');
+    const arrowSource = svg.querySelector('.animated-logo__arrow-source');
+    const trigger = svg.closest('.logo-trigger');
+    if (!shape || !logoSource || !arrowSource || !trigger) return;
+
+    if (matchMedia('(hover: none)').matches) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReduced.matches) {
+      return;
+    }
+
+    const fromPoints = samplePoints(logoSource, SAMPLE_COUNT);
+    const rawToPoints = samplePoints(arrowSource, SAMPLE_COUNT);
+    const toPoints = alignPoints(fromPoints, rawToPoints);
+
+    let progress = 0;
+    let target = 0;
+    let startProgress = 0;
+    let startTime = 0;
+    let frame = 0;
+
+    const render = (nextProgress) => {
+      progress = nextProgress;
+      const points = interpolate(fromPoints, toPoints, progress);
+      shape.setAttribute('d', toPath(points));
+    };
+
+    const tick = (time) => {
+      const elapsed = time - startTime;
+      const ratio = Math.min(1, elapsed / DURATION_MS);
+      const eased = ease(ratio);
+      render(startProgress + (target - startProgress) * eased);
+      if (ratio < 1) {
+        frame = window.requestAnimationFrame(tick);
+      } else {
+        frame = 0;
+      }
+    };
+
+    const animateTo = (nextTarget) => {
+      if (nextTarget === target && frame) return;
+      target = nextTarget;
+      startProgress = progress;
+      startTime = performance.now();
+      if (frame) {
+        window.cancelAnimationFrame(frame);
+      }
+      frame = window.requestAnimationFrame(tick);
+    };
+
+    trigger.addEventListener('mouseenter', () => animateTo(1));
+    trigger.addEventListener('mouseleave', () => animateTo(0));
+    trigger.addEventListener('focus', () => animateTo(1));
+    trigger.addEventListener('blur', () => animateTo(0));
+  };
+
+  for (const svg of document.querySelectorAll('.animated-logo')) {
+    setupMorph(svg);
+  }
+</script>
+
+<style>
+  .animated-logo {
+    width: 100%;
+    height: 100%;
+  }
+</style>
