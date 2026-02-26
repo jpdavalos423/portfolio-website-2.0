@@ -1,25 +1,16 @@
 ---
-import '../styles/globals.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Portfolio</title>
-	</head>
-	<body class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased">
-		<main class="mx-auto flex min-h-screen max-w-3xl items-center px-6 py-16">
-			<div class="space-y-3">
-				<p class="text-sm text-[var(--muted)]">Phase 1 Scaffold</p>
-				<h1 class="text-3xl font-semibold tracking-tight">Portfolio foundation ready.</h1>
-				<p class="text-base text-[var(--muted)]">
-					Astro + Tailwind + TypeScript scaffold with dark-only global tokens and system font stack.
-				</p>
-			</div>
-		</main>
-	</body>
-</html>
+<BaseLayout
+  title="Portfolio"
+  description="Personal portfolio website scaffold with Astro, TypeScript, and Tailwind."
+>
+  <section class="space-y-3 py-8">
+    <p class="text-sm text-[var(--muted)]">Phase 2 Layout Shell</p>
+    <h1 class="text-3xl font-semibold tracking-tight">Base layout, nav, footer, and SEO are wired up.</h1>
+    <p class="text-base text-[var(--muted)]">
+      This placeholder content verifies the shared shell renders statically with dark styling and no client-side JS.
+    </p>
+  </section>
+</BaseLayout>
