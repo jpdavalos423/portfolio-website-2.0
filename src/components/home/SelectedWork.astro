@@ -35,7 +35,7 @@ const selected = [...featured, ...fallback].slice(0, 2);
     </a>
   </div>
 
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
     {selected.map((project) => <ProjectCard project={project} interactive={false} />)}
   </div>
 </section>

@@ -13,7 +13,7 @@ const href = `/projects/${project.slug}`;
 const highlights = project.data.highlights.slice(0, 3);
 ---
 
-<article class="rounded-2xl bg-[var(--surface)] p-4 sm:p-5">
+<article class="rounded-2xl bg-[var(--surface)] p-4 sm:p-6 lg:p-7">
   <a
     href={href}
     class="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface)]"
@@ -40,19 +40,19 @@ const highlights = project.data.highlights.slice(0, 3);
       )
     }
 
-    <div class="mt-4 space-y-3">
+    <div class="mt-4 space-y-3 sm:mt-5 sm:space-y-4">
       <div class="space-y-2">
-        <h3 class="text-lg font-semibold tracking-tight text-[var(--text)] group-hover:text-[var(--accent)]">
+        <h3 class="text-lg font-semibold tracking-tight text-[var(--text)] group-hover:text-[var(--accent)] sm:text-xl">
           {project.data.title}
         </h3>
-        <p class="text-sm text-[var(--muted)]">{project.data.summary}</p>
+        <p class="text-sm text-[var(--muted)] sm:text-base sm:leading-7">{project.data.summary}</p>
       </div>
 
       <TechStackPills items={project.data.stack} singleLine={true} />
 
       {
         highlights.length > 0 && (
-          <ul class="flex flex-wrap gap-x-3 gap-y-2 text-xs text-[var(--muted)]" aria-label="Highlights">
+          <ul class="flex flex-wrap gap-x-3 gap-y-2 text-xs text-[var(--muted)] sm:gap-x-4 sm:gap-y-3 sm:text-sm" aria-label="Highlights">
             {highlights.map((highlight) => (
               <li class="flex items-center gap-2">
                 <span class="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" aria-hidden="true"></span>

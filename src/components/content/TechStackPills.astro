@@ -11,7 +11,7 @@ const { items, singleLine = false } = Astro.props;
   items.length > 0 && (
     <ul
       class:list={[
-        'flex gap-2',
+        'flex gap-2 sm:gap-2.5',
         singleLine ? 'flex-nowrap overflow-hidden' : 'flex-wrap',
       ]}
       aria-label="Technology stack"
@@ -19,7 +19,7 @@ const { items, singleLine = false } = Astro.props;
       {items.map((item) => (
         <li
           class:list={[
-            'rounded-full bg-[var(--surface)] px-3 py-1 text-xs text-[var(--muted)]',
+            'rounded-full bg-[var(--surface)] px-3 py-1 text-xs text-[var(--muted)] sm:px-3.5 sm:py-1.5 sm:text-sm',
             singleLine && 'shrink-0 whitespace-nowrap',
           ]}
         >
