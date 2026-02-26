@@ -5,10 +5,14 @@ import ExperienceSubnav from '../../components/nav/ExperienceSubnav.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { compareExperienceStartDesc } from '../../lib/collections';
 
-const experiences = (await getCollection('experience')).sort(compareExperienceStartDesc);
+const experiences = (await getCollection('experience')).sort(
+  compareExperienceStartDesc,
+);
 const featured = experiences.filter((entry) => entry.data.featured);
 const featuredSlugs = new Set(featured.map((entry) => entry.slug));
-const recent = experiences.filter((entry) => !featuredSlugs.has(entry.slug)).slice(0, 3);
+const recent = experiences
+  .filter((entry) => !featuredSlugs.has(entry.slug))
+  .slice(0, 3);
 ---
 
 <BaseLayout title="Experience | JP Davalos" description="Industry, research, and leadership experience.">

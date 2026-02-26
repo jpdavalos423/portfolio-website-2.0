@@ -6,8 +6,8 @@ interface Props {
 }
 
 const {
-  title = 'Portfolio',
-  description = 'Personal portfolio website.',
+  title = 'JP Davalos | Software Engineer',
+  description = 'Software engineer portfolio with projects, experience, and contact details.',
   ogImage = '/favicon.svg',
 } = Astro.props;
 ---
@@ -17,6 +17,7 @@ const {
 <meta name="generator" content={Astro.generator} />
 <title>{title}</title>
 <meta name="description" content={description} />
+<meta name="theme-color" content="#0b0d10" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />

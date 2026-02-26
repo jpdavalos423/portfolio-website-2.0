@@ -52,6 +52,7 @@ const pageDescription = project.data.summary;
             src={project.data.poster}
             alt={`${project.data.title} poster`}
             loading="lazy"
+            decoding="async"
             class="aspect-[16/10] w-full object-cover"
           />
         </figure>
@@ -95,11 +96,5 @@ const pageDescription = project.data.summary;
 
   .project-detail-body :global(a) {
     color: var(--accent);
-  }
-  
-  .project-detail-body :global(video) {
-    width: 100%;
-    border-radius: 0.75rem;
-    background: rgb(0 0 0 / 0.2);
   }
 </style>

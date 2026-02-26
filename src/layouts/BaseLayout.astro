@@ -7,22 +7,27 @@ import '../styles/globals.css';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title = 'Portfolio', description = 'Personal portfolio website.' } =
-  Astro.props;
+const {
+  title = 'JP Davalos | Software Engineer',
+  description = 'Software engineer portfolio with projects, experience, and contact details.',
+  ogImage,
+} = Astro.props;
 ---
 
 <html lang="en">
   <head>
-    <SEO title={title} description={description} />
+    <SEO title={title} description={description} ogImage={ogImage} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
   </head>
   <body class="min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased">
     <div class="flex min-h-screen flex-col">
+      <a href="#main-content" class="skip-link">Skip to content</a>
       <Navbar />
-      <main class="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
+      <main id="main-content" tabindex="-1" class="mx-auto w-full max-w-3xl flex-1 px-6 py-10 sm:py-12">
         <slot />
       </main>
       <Footer />

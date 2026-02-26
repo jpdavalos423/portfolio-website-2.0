@@ -15,7 +15,7 @@ const isActive = (href: string) =>
   <a
     href="/"
     class:list={[
-      'text-sm font-semibold tracking-tight transition-colors',
+      'text-sm font-semibold tracking-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
       pathname === '/' ? 'text-[var(--text)]' : 'text-[var(--text)] hover:text-[var(--accent)]',
     ]}
   >

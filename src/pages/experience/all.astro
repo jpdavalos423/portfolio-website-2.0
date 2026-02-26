@@ -5,9 +5,13 @@ import ExperienceSubnav from '../../components/nav/ExperienceSubnav.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { compareExperienceStartDesc } from '../../lib/collections';
 
-const experiences = (await getCollection('experience')).sort(compareExperienceStartDesc);
+const experiences = (await getCollection('experience')).sort(
+  compareExperienceStartDesc,
+);
 
-const grouped = experiences.reduce<Record<string, CollectionEntry<'experience'>[]>>((acc, entry) => {
+const grouped = experiences.reduce<
+  Record<string, CollectionEntry<'experience'>[]>
+>((acc, entry) => {
   const year = entry.data.start.slice(0, 4);
   acc[year] ??= [];
   acc[year].push(entry);

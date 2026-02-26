@@ -87,6 +87,7 @@ export default function HoverPreview({
         src={poster}
         alt={`${title} poster`}
         loading="lazy"
+        decoding="async"
         className={`absolute inset-0 block h-full w-full object-cover transition-[opacity,transform,filter] duration-300 ease-out ${
           showVideo && isActive ? 'opacity-0' : 'opacity-100'
         } ${
