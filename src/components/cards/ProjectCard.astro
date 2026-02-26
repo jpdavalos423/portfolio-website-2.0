@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import TechStackPills from '../content/TechStackPills.astro';
+import HoverPreview from '../islands/HoverPreview';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -10,47 +11,35 @@ interface Props {
 const { project, interactive = false } = Astro.props;
 const href = `/projects/${project.slug}`;
 const highlights = project.data.highlights.slice(0, 3);
-const hasDemo = Boolean(project.data.demoWebm || project.data.demoMp4);
 ---
 
 <article class="rounded-2xl bg-[var(--surface)] p-4 sm:p-5">
   <a
     href={href}
-    class="group block space-y-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface)]"
+    class="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface)]"
   >
     {
       interactive ? (
-        <div
-          class="relative overflow-hidden rounded-xl bg-black/30"
-          data-hover-preview-container
-          data-demo-webm={project.data.demoWebm}
-          data-demo-mp4={project.data.demoMp4}
-          data-has-demo={hasDemo ? 'true' : 'false'}
-        >
-          <img
-            src={project.data.poster}
-            alt={`${project.data.title} poster`}
-            loading="lazy"
-            class="aspect-[16/10] w-full object-cover opacity-95 transition-opacity group-hover:opacity-85"
-          />
-          <div class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between bg-black/45 px-3 py-2 text-xs text-white">
-            <span>{hasDemo ? 'Hover preview ready' : 'Poster only'}</span>
-            <span>Phase 7 island</span>
-          </div>
-        </div>
+        <HoverPreview
+          client:visible
+          poster={project.data.poster}
+          title={project.data.title}
+          demoWebm={project.data.demoWebm}
+          demoMp4={project.data.demoMp4}
+        />
       ) : (
         <div class="overflow-hidden rounded-xl bg-black/30">
           <img
             src={project.data.poster}
             alt={`${project.data.title} poster`}
             loading="lazy"
-            class="aspect-[16/10] w-full object-cover"
+            class="aspect-[16/10] w-full object-cover transition-[transform,filter] duration-300 ease-out motion-safe:group-hover:scale-[1.015] motion-safe:group-hover:brightness-90"
           />
         </div>
       )
     }
 
-    <div class="space-y-3">
+    <div class="mt-4 space-y-3">
       <div class="space-y-2">
         <h3 class="text-lg font-semibold tracking-tight text-[var(--text)] group-hover:text-[var(--accent)]">
           {project.data.title}

@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../../components/cards/ProjectCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { compareProjectDateDesc } from '../../lib/collections';
+
+const projects = (await getCollection('projects')).sort(compareProjectDateDesc);
+const featuredProjects = projects.filter((project) => project.data.featured);
+const allProjects = projects.filter((project) => !project.data.featured);
+---
+
+<BaseLayout
+  title="Projects | Portfolio"
+  description="Featured and archived software projects with hover previews on the projects index."
+>
+  <section class="space-y-3 py-8" aria-labelledby="projects-page-heading">
+    <p class="text-sm text-[var(--muted)]">Projects</p>
+    <h1 id="projects-page-heading" class="text-3xl font-semibold tracking-tight sm:text-4xl">
+      Software projects and case studies
+    </h1>
+    <p class="max-w-2xl text-sm text-[var(--muted)] sm:text-base">
+      Featured projects appear first with interactive previews on hover. Additional work is listed below.
+    </p>
+  </section>
+
+  <section class="space-y-6 py-8" aria-labelledby="projects-featured-heading">
+    <div class="space-y-2">
+      <p class="text-sm text-[var(--muted)]">Featured</p>
+      <h2 id="projects-featured-heading" class="text-2xl font-semibold tracking-tight">
+        Selected projects
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {featuredProjects.map((project) => <ProjectCard project={project} interactive={true} />)}
+    </div>
+  </section>
+
+  <section class="space-y-6 py-8" aria-labelledby="projects-all-heading">
+    <div class="space-y-2">
+      <p class="text-sm text-[var(--muted)]">All Projects</p>
+      <h2 id="projects-all-heading" class="text-2xl font-semibold tracking-tight">
+        More work
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {allProjects.map((project) => <ProjectCard project={project} interactive={true} />)}
+    </div>
+  </section>
+</BaseLayout>
