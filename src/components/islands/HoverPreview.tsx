@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { getPosterImageAttrs } from '../../lib/posterImages';
 
 type HoverPreviewProps = {
   poster: string;
@@ -19,6 +20,7 @@ export default function HoverPreview({
   const [isActive, setIsActive] = useState(false);
 
   const hasDemo = Boolean(demoWebm || demoMp4);
+  const posterAttrs = getPosterImageAttrs(poster);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -85,7 +87,11 @@ export default function HoverPreview({
     >
       <img
         src={poster}
+        srcSet={posterAttrs.srcSet}
+        sizes={posterAttrs.sizes}
         alt={`${title} poster`}
+        width={posterAttrs.width}
+        height={posterAttrs.height}
         loading="lazy"
         decoding="async"
         className={`absolute inset-0 block h-full w-full object-cover transition-[opacity,transform,filter] duration-300 ease-out ${
