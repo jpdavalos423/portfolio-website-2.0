@@ -7,10 +7,11 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "biome check astro.config.mjs biome.json package.json src tsconfig.json",
+    "lint": "biome check astro.config.mjs biome.json package.json src/content.config.ts src/components/islands src/lib src/styles tsconfig.json",
     "format": "biome format --write astro.config.mjs biome.json package.json src tsconfig.json"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/react": "^4.4.2",
     "@tailwindcss/vite": "^4.2.1",

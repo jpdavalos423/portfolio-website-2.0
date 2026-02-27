@@ -8,7 +8,8 @@ const POSTER_DIMENSIONS: Record<string, { width: number; height: number }> = {
 
 const FALLBACK_SIZE = { width: 1280, height: 720 };
 
-export const posterSizes = '(min-width: 1024px) 30rem, (min-width: 768px) 45vw, 100vw';
+export const posterSizes =
+  '(min-width: 1024px) 30rem, (min-width: 768px) 45vw, 100vw';
 
 export function getPosterImageAttrs(poster: string) {
   const dimensions = POSTER_DIMENSIONS[poster] ?? FALLBACK_SIZE;
