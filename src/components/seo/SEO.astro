@@ -3,13 +3,22 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  canonical?: string;
+  schema?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const {
   title = 'JP Davalos | Software Engineer',
   description = 'Software engineer portfolio with projects, experience, and contact details.',
   ogImage = '/favicon.svg',
+  canonical,
+  schema,
 } = Astro.props;
+
+const schemaEntries = Array.isArray(schema) ? schema : schema ? [schema] : [];
+const serializedSchema = schemaEntries.map((entry) =>
+  JSON.stringify(entry).replaceAll('<', '\\u003c'),
+);
 ---
 
 <meta charset="utf-8" />
@@ -17,6 +26,7 @@ const {
 <meta name="generator" content={Astro.generator} />
 <title>{title}</title>
 <meta name="description" content={description} />
+{canonical && <link rel="canonical" href={canonical} />}
 <meta name="theme-color" content="#0b0d10" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content={title} />
@@ -26,3 +36,8 @@ const {
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
+{
+  serializedSchema.map((payload) => (
+    <script type="application/ld+json" set:html={payload}></script>
+  ))
+}

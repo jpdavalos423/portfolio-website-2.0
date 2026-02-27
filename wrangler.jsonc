@@ -1,7 +1,17 @@
 {
+  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfoliowebsite2",
   "compatibility_date": "2026-02-27",
+  "compatibility_flags": [
+    "global_fetch_strictly_public",
+    "nodejs_compat"
+  ],
+  "main": "dist/_worker.js/index.js",
   "assets": {
-    "directory": "./dist"
+    "binding": "ASSETS",
+    "directory": "dist"
+  },
+  "observability": {
+    "enabled": true
   }
 }

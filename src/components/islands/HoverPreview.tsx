@@ -32,14 +32,50 @@ export default function HoverPreview({
 
     updatePreference();
 
-    if (typeof mediaQuery.addEventListener === 'function') {
-      mediaQuery.addEventListener('change', updatePreference);
-      return () => mediaQuery.removeEventListener('change', updatePreference);
+    mediaQuery.addEventListener('change', updatePreference);
+    return () => mediaQuery.removeEventListener('change', updatePreference);
+  }, []);
+
+  const activatePreview = useCallback(() => {
+    if (!hasDemo || isReducedMotion) {
+      return;
     }
 
-    mediaQuery.addListener(updatePreference);
-    return () => mediaQuery.removeListener(updatePreference);
+    setShouldLoadVideo((current) => {
+      if (!current) {
+        return true;
+      }
+      return current;
+    });
+    setIsActive(true);
+  }, [hasDemo, isReducedMotion]);
+
+  const deactivatePreview = useCallback(() => {
+    setIsActive(false);
   }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) {
+      return;
+    }
+
+    const onPointerEnter = () => {
+      activatePreview();
+    };
+
+    const onPointerLeave = () => {
+      deactivatePreview();
+    };
+
+    container.addEventListener('pointerenter', onPointerEnter);
+    container.addEventListener('pointerleave', onPointerLeave);
+
+    return () => {
+      container.removeEventListener('pointerenter', onPointerEnter);
+      container.removeEventListener('pointerleave', onPointerLeave);
+    };
+  }, [activatePreview, deactivatePreview]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -60,37 +96,6 @@ export default function HoverPreview({
       });
     }
   }, [hasDemo, isActive, isReducedMotion, shouldLoadVideo]);
-
-  const activatePreview = useCallback(() => {
-    if (!hasDemo || isReducedMotion) {
-      return;
-    }
-
-    if (!shouldLoadVideo) {
-      setShouldLoadVideo(true);
-    }
-
-    setIsActive(true);
-  }, [hasDemo, isReducedMotion, shouldLoadVideo]);
-
-  const deactivatePreview = useCallback(() => {
-    setIsActive(false);
-  }, []);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) {
-      return;
-    }
-
-    container.addEventListener('mouseenter', activatePreview);
-    container.addEventListener('mouseleave', deactivatePreview);
-
-    return () => {
-      container.removeEventListener('mouseenter', activatePreview);
-      container.removeEventListener('mouseleave', deactivatePreview);
-    };
-  }, [activatePreview, deactivatePreview]);
 
   const showVideo = hasDemo && shouldLoadVideo && !isReducedMotion;
 

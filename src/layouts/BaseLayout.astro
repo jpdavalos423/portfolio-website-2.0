@@ -8,18 +8,31 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  canonicalPath?: string;
+  schema?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const {
   title = 'JP Davalos | Software Engineer',
   description = 'Software engineer portfolio with projects, experience, and contact details.',
   ogImage,
+  canonicalPath = Astro.url.pathname,
+  schema,
 } = Astro.props;
+
+const canonical = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
+const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString() : ogImage;
 ---
 
 <html lang="en">
   <head>
-    <SEO title={title} description={description} ogImage={ogImage} />
+    <SEO
+      title={title}
+      description={description}
+      ogImage={ogImageUrl}
+      canonical={canonical}
+      schema={schema}
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -72,7 +85,8 @@ const {
     let pointerY = 0;
     let isTrackingPointer = false;
 
-    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const clamp = (value: number, min: number, max: number): number =>
+      Math.min(max, Math.max(min, value));
 
     const updateGlowPosition = () => {
       frame = 0;
@@ -93,7 +107,7 @@ const {
       scope.style.setProperty('--site-glow-y', `${yPercent}%`);
     };
 
-    const queueGlowUpdate = (x, y) => {
+    const queueGlowUpdate = (x: number, y: number): void => {
       pointerX = x;
       pointerY = y;
       if (frame !== 0) {
@@ -102,14 +116,14 @@ const {
       frame = window.requestAnimationFrame(updateGlowPosition);
     };
 
-    const onPointerMove = (event) => {
+    const onPointerMove = (event: PointerEvent): void => {
       if (document.hidden || event.pointerType === 'touch') {
         return;
       }
       queueGlowUpdate(event.clientX, event.clientY);
     };
 
-    const onPointerEnter = (event) => {
+    const onPointerEnter = (event: PointerEvent): void => {
       if (event.pointerType === 'touch') {
         return;
       }
@@ -125,7 +139,7 @@ const {
       queueGlowUpdate(event.clientX, event.clientY);
     };
 
-    const onPointerLeave = (event) => {
+    const onPointerLeave = (event: PointerEvent): void => {
       if (event.pointerType === 'touch') {
         return;
       }
