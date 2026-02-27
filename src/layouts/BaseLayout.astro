@@ -58,6 +58,10 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
         <span class="particle"></span>
         <span class="particle"></span>
         <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
+        <span class="particle"></span>
       </div>
       <div class="site-glow" aria-hidden="true"></div>
 
@@ -206,7 +210,8 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
   .particle {
     position: absolute;
     border-radius: 9999px;
-    background: rgb(163 208 255);
+    background: rgb(177 220 255);
+    box-shadow: 0 0 6px rgb(89 179 255 / 0.25);
     filter: blur(0.2px);
     will-change: transform;
     animation-iteration-count: infinite;
@@ -387,6 +392,50 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
     animation-name: particle-drift-a;
     animation-duration: 46s;
     animation-delay: -52s;
+  }
+
+  .particle:nth-child(17) {
+    left: 6%;
+    top: 28%;
+    width: 2px;
+    height: 2px;
+    opacity: 0.12;
+    animation-name: particle-drift-b;
+    animation-duration: 42s;
+    animation-delay: -15s;
+  }
+
+  .particle:nth-child(18) {
+    left: 36%;
+    top: 14%;
+    width: 3px;
+    height: 3px;
+    opacity: 0.15;
+    animation-name: particle-drift-a;
+    animation-duration: 50s;
+    animation-delay: -40s;
+  }
+
+  .particle:nth-child(19) {
+    left: 68%;
+    top: 22%;
+    width: 2px;
+    height: 2px;
+    opacity: 0.11;
+    animation-name: particle-drift-c;
+    animation-duration: 38s;
+    animation-delay: -26s;
+  }
+
+  .particle:nth-child(20) {
+    left: 90%;
+    top: 32%;
+    width: 3px;
+    height: 3px;
+    opacity: 0.14;
+    animation-name: particle-drift-b;
+    animation-duration: 44s;
+    animation-delay: -34s;
   }
 
   @keyframes particle-drift-a {

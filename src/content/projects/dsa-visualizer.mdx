@@ -2,7 +2,7 @@
 title: DSA Visualizer
 date: "2025-02"
 featured: true
-summary: Interactive learning tool for students used for visualizing data structures and algorithms step by step.
+summary: Interactive learning tool for visualizing data structures and algorithms step by step.
 stack:
   - TypeScript
   - React
@@ -20,23 +20,23 @@ links:
 
 ## Overview
 
-DSA Visualizer is an educational project focused on making algorithm behavior easier to understand through animation and interaction.
+DSA Visualizer is an educational tool that makes algorithm behavior tangible through animation and interactive controls. Instead of reading static diagrams or staring at code, students can watch each operation unfold — comparisons, swaps, and state changes — in real time.
 
 ## Problem
 
-Students often struggle to build intuition for algorithms when they only see code or static diagrams.
+Static notes, textbooks, and lecture slides struggle to capture how algorithms actually move through data. Students often finish exams without ever building a real mental model of why a sorting algorithm works the way it does or what makes one approach faster than another.
 
 ## What I Built
 
-An interactive visualizer that walks through sorting operations and highlights state changes across each step of execution.
+An interactive visualizer built with React and TypeScript that walks through sorting algorithms step by step, highlighting comparisons and swaps as they happen. The project is designed as an extensible base — the component architecture makes it straightforward to add new algorithms and data structures over time.
 
 ## Technical Decisions
 
-I prioritized clear visual feedback and incremental feature growth so new algorithms and structures can be added over time.
+I kept the component architecture modular from the start so new algorithms can be dropped in without reworking core rendering logic. Vite kept the development loop fast, and Tailwind kept styling consistent across visualization states without fighting CSS specificity.
 
 ## Impact
 
-The project serves as a practical learning tool while sharpening my front-end interaction design and algorithm communication skills.
+DSA Visualizer became both a useful study tool and a project that sharpened my thinking on how to communicate complex state changes through UI design — a skill that shows up in every frontend project I build now.
 
 ## Demo
 

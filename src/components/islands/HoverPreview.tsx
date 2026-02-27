@@ -114,11 +114,11 @@ export default function HoverPreview({
         height={posterAttrs.height}
         loading="lazy"
         decoding="async"
-        className={`absolute inset-0 block h-full w-full object-cover transition-[opacity,transform,filter] duration-300 ease-out ${
+        className={`absolute inset-0 block h-full w-full object-cover transition-[opacity,filter] duration-300 ease-out ${
           showVideo && isActive ? 'opacity-0' : 'opacity-100'
         } ${
           !hasDemo
-            ? 'motion-safe:group-hover:scale-[1.015] motion-safe:group-hover:brightness-90'
+            ? 'motion-safe:group-hover:brightness-90'
             : ''
         }`}
       />

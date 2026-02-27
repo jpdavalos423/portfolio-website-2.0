@@ -2,7 +2,7 @@
 title: Transfer Pathway Planner
 date: "2025-08"
 featured: true
-summary: Web app for students that generates community-college-to-UC Computer Science transfer pathways.
+summary: Student-facing web application that generates community-college-to-UC Computer Science transfer pathways.
 stack:
   - React
   - TypeScript
@@ -10,7 +10,7 @@ stack:
   - FastAPI
 highlights:
   - Built a full-stack web app that generates customized transfer plans for California community college CS students.
-  - Implemented backend scheduling logic to validate prerequisites and optimize course sequencing.
+  - Implemented backend scheduling logic to validate prerequisites and optimize course sequencing across terms.
   - Developed a responsive interface for real-time course validation and smooth backend data integration.
 poster: /demos/posters/transfer-pathway-planner.webp
 links:
@@ -20,20 +20,20 @@ links:
 
 ## Overview
 
-Transfer Pathway Planner is a full-stack web application designed to help students map an efficient transfer path from California community colleges to UC Computer Science programs. The experience focuses on turning degree and prerequisite complexity into a clear, actionable plan.
+Transfer Pathway Planner is a full-stack web application that helps students map an efficient path from California community colleges to UC Computer Science programs. It turns the complexity of articulation agreements, prerequisite chains, and course sequencing into a clear, term-by-term plan.
 
 ## Problem
 
-Transfer planning is often fragmented across multiple curriculum pages, articulation agreements, and manual advising workflows. Students can miss prerequisite dependencies or take courses in the wrong order, which delays transfer readiness and increases uncertainty.
+Transfer planning is fragmented across dozens of curriculum pages, articulation agreements, and advising appointments that not every student has equal access to. Missing a prerequisite dependency or taking courses out of order can delay transfer readiness by an entire year — and most students don't find out until it's too late.
 
 ## What I Built
 
-I built a student-facing planner with a React and TypeScript front end backed by FastAPI services and SQL-driven program data. Users can explore pathway recommendations, validate course selections, and iteratively adjust plans while receiving immediate feedback from backend validation rules.
+A student-facing planner with a React and TypeScript frontend backed by FastAPI services and SQL-driven program data. Users can explore pathway recommendations, validate course selections against prerequisite rules, and adjust their plans with immediate feedback from backend validation logic.
 
 ## Technical Decisions
 
-I structured the backend around prerequisite-aware scheduling and validation workflows so the planner could enforce course ordering constraints while remaining responsive. On the frontend, I prioritized a clean, mobile-friendly UI and fast interactions to keep planning sessions intuitive for students with different levels of advising support.
+The backend is structured around prerequisite-aware scheduling — enforcing course ordering constraints while keeping response times fast. On the frontend, I focused on a clean, mobile-friendly UI that stays intuitive for students with varying levels of advising support, where a confusing interface could actually discourage good planning decisions.
 
 ## Impact
 
-The project demonstrates how practical software tooling can reduce friction in academic planning by transforming complex transfer requirements into guided decisions. It also strengthened my experience building end-to-end systems that combine algorithmic logic, data modeling, and user-centered interface design.
+This project grew directly out of my undergraduate research on California CS transfer pathways. Building the planner on top of that research data meant turning academic findings into something students could actually use — closing the gap between data analysis and practical tooling.

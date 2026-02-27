@@ -20,23 +20,23 @@ links:
 
 ## Overview
 
-Now Playing Display is a small utility project that turns Spotify playback data into a real-time display for a dedicated device.
+Now Playing Display is a personal hardware-software build that turns a Raspberry Pi into a dedicated Spotify screen. It runs continuously, silently refreshing playback info and handling authentication in the background — no keyboard, no mouse, no manual intervention.
 
 ## Problem
 
-I wanted a clean way to show current Spotify playback status on a Raspberry Pi display without manually refreshing anything.
+I wanted a low-friction way to glance at what's currently playing without switching windows or picking up my phone. I had a Raspberry Pi with a small display sitting idle, and wiring it up to Spotify felt like the right kind of weekend project.
 
 ## What I Built
 
-A real-time now-playing interface that pulls Spotify playback information, manages authentication, and renders a display-friendly UI.
+A real-time playback interface that authenticates with Spotify's Web API, polls for the currently playing track, and automatically refreshes OAuth tokens to stay persistent indefinitely. The UI is designed for the Pi's display constraints — readable at a glance, minimal, always on.
 
 ## Technical Decisions
 
-I optimized the project for a constrained hardware display context and reliability of the Spotify auth flow.
+The hardest part was making the OAuth flow fully hands-off after the initial setup. I built a reliable token refresh loop so the display never goes stale mid-session. I also kept the rendering lightweight to run smoothly on Pi hardware without performance issues.
 
 ## Impact
 
-The project combined API integration, device-oriented UI thinking, and practical auth handling in a fun personal build.
+A small but satisfying project — it connected API integration, auth reliability, and hardware-constrained UI thinking in one build. It also taught me how differently software behaves when it's running headless and always-on rather than user-initiated.
 
 ## Demo
 
