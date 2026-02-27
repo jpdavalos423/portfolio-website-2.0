@@ -1,4 +1,6 @@
 // @ts-check
+
+import cloudflare from '@astrojs/cloudflare';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
@@ -33,4 +35,5 @@ export default defineConfig({
   },
 
   integrations: [mdx(), react()],
+  adapter: cloudflare(),
 });

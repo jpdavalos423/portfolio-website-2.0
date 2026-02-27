@@ -126,7 +126,8 @@ export const createExperienceSchema = (
   site: URL,
   experience: CollectionEntry<'experience'>,
 ): SchemaObject => {
-  const description = experience.data.highlights[0] ??
+  const description =
+    experience.data.highlights[0] ??
     `${experience.data.role} at ${experience.data.org}.`;
 
   return {
