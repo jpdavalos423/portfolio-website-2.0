@@ -27,6 +27,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
     "@biomejs/biome": "^2.4.4",
+    "@types/node": "^25.3.2",
     "typescript": "^5.9.3",
     "wrangler": "^4.69.0"
   }

@@ -1,4 +1,5 @@
 // @ts-check
+/// <reference types="node" />
 
 import cloudflare from '@astrojs/cloudflare';
 import mdx from '@astrojs/mdx';
