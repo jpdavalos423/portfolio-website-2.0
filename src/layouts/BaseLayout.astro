@@ -8,18 +8,31 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  canonicalPath?: string;
+  schema?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const {
   title = 'JP Davalos | Software Engineer',
   description = 'Software engineer portfolio with projects, experience, and contact details.',
   ogImage,
+  canonicalPath = Astro.url.pathname,
+  schema,
 } = Astro.props;
+
+const canonical = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
+const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString() : ogImage;
 ---
 
 <html lang="en">
   <head>
-    <SEO title={title} description={description} ogImage={ogImage} />
+    <SEO
+      title={title}
+      description={description}
+      ogImage={ogImageUrl}
+      canonical={canonical}
+      schema={schema}
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

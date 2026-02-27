@@ -4,13 +4,37 @@ import ExperienceCard from '../../components/cards/ExperienceCard.astro';
 import ExperienceSubnav from '../../components/nav/ExperienceSubnav.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { compareExperienceStartDesc } from '../../lib/collections';
+import {
+  createBreadcrumbSchema,
+  createExperienceCollectionSchema,
+} from '../../lib/seo';
 
 const items = (await getCollection('experience'))
   .filter((entry) => entry.data.type === 'leadership')
   .sort(compareExperienceStartDesc);
+const schema = Astro.site
+  ? [
+      createExperienceCollectionSchema(
+        Astro.site,
+        '/experience/leadership',
+        'Leadership Experience',
+        'Leadership and community experience entries.',
+        items,
+      ),
+      createBreadcrumbSchema(Astro.site, [
+        { name: 'Home', path: '/' },
+        { name: 'Experience', path: '/experience' },
+        { name: 'Leadership', path: '/experience/leadership' },
+      ]),
+    ]
+  : undefined;
 ---
 
-<BaseLayout title="Leadership Experience | JP Davalos" description="Leadership experience entries.">
+<BaseLayout
+  title="Leadership Experience | JP Davalos"
+  description="Leadership experience entries."
+  schema={schema}
+>
   <div class="space-y-8">
     <header class="space-y-3">
       <p class="text-sm text-[var(--muted)]">Experience</p>
