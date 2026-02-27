@@ -3,20 +3,23 @@ name: CI
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches:
+      - main
 
 jobs:
   checks:
-    if: github.event.pull_request.draft == false
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10.30.2
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -34,4 +37,4 @@ jobs:
         run: pnpm build
 
       - name: Astro check
-        run: pnpm astro check
+        run: pnpm check

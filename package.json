@@ -2,6 +2,7 @@
   "name": "portfolio-website-2.0",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@10.30.2",
   "scripts": {
     "dev": "NODE_ENV=development astro dev",
     "build": "astro build",
