@@ -4,6 +4,10 @@ import ExperienceCard from '../../components/cards/ExperienceCard.astro';
 import ExperienceSubnav from '../../components/nav/ExperienceSubnav.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { compareExperienceStartDesc } from '../../lib/collections';
+import {
+  createBreadcrumbSchema,
+  createExperienceCollectionSchema,
+} from '../../lib/seo';
 
 const experiences = (await getCollection('experience')).sort(
   compareExperienceStartDesc,
@@ -13,9 +17,28 @@ const featuredSlugs = new Set(featured.map((entry) => entry.slug));
 const recent = experiences
   .filter((entry) => !featuredSlugs.has(entry.slug))
   .slice(0, 3);
+const schema = Astro.site
+  ? [
+      createExperienceCollectionSchema(
+        Astro.site,
+        '/experience',
+        'Experience',
+        'Industry, research, and leadership experience by JP Davalos.',
+        experiences,
+      ),
+      createBreadcrumbSchema(Astro.site, [
+        { name: 'Home', path: '/' },
+        { name: 'Experience', path: '/experience' },
+      ]),
+    ]
+  : undefined;
 ---
 
-<BaseLayout title="Experience | JP Davalos" description="Industry, research, and leadership experience.">
+<BaseLayout
+  title="Experience | JP Davalos"
+  description="Industry, research, and leadership experience."
+  schema={schema}
+>
   <div class="space-y-8">
     <header class="space-y-3">
       <h1 class="text-5xl font-semibold tracking-tight sm:text-6xl">Experience</h1>
