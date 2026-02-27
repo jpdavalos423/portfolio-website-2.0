@@ -1,5 +1,5 @@
-import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
+import type { APIRoute } from 'astro';
 
 const toProjectIsoDate = (value: string) =>
   value.length === 7 ? `${value}-01` : value;
@@ -55,11 +55,17 @@ export const GET: APIRoute = async ({ site }) => {
       : toExperienceIsoDate(entry.data.start),
   }));
 
-  const allEntries = [...staticEntries, ...projectEntries, ...experienceEntries];
+  const allEntries = [
+    ...staticEntries,
+    ...projectEntries,
+    ...experienceEntries,
+  ];
 
   const urls = allEntries
     .map((entry) => {
-      const loc = escapeXml(new URL(toCanonicalPath(entry.path), site).toString());
+      const loc = escapeXml(
+        new URL(toCanonicalPath(entry.path), site).toString(),
+      );
       const lastmod = entry.lastmod
         ? `<lastmod>${escapeXml(entry.lastmod)}</lastmod>`
         : '';

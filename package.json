@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "pnpm run build && wrangler dev",
     "astro": "astro",
-    "lint": "biome check astro.config.mjs biome.json package.json src/content.config.ts src/components/islands src/lib src/styles tsconfig.json",
+    "lint": "biome check astro.config.mjs biome.json package.json src tsconfig.json",
     "format": "biome format --write astro.config.mjs biome.json package.json src tsconfig.json",
     "check": "astro check",
     "deploy": "pnpm run build && wrangler deploy",
