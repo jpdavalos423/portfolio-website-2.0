@@ -3,6 +3,7 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import LinkRow from '../../components/content/LinkRow.astro';
 import TechStackPills from '../../components/content/TechStackPills.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { createBreadcrumbSchema, createExperienceSchema } from '../../lib/seo';
 
 interface Props {
   experience: CollectionEntry<'experience'>;
@@ -26,9 +27,22 @@ const typeLabel =
 
 const title = `${experience.data.role} @ ${experience.data.org} | Experience | JP Davalos`;
 const description = `${experience.data.role} at ${experience.data.org} (${period}).`;
+const schema = Astro.site
+  ? [
+      createExperienceSchema(Astro.site, experience),
+      createBreadcrumbSchema(Astro.site, [
+        { name: 'Home', path: '/' },
+        { name: 'Experience', path: '/experience' },
+        {
+          name: `${experience.data.role} @ ${experience.data.org}`,
+          path: `/experience/${experience.slug}`,
+        },
+      ]),
+    ]
+  : undefined;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} schema={schema}>
   <div class="space-y-8">
     <a
       href="/experience"
