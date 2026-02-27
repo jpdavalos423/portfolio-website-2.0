@@ -3,6 +3,7 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import LinkRow from '../../components/content/LinkRow.astro';
 import TechStackPills from '../../components/content/TechStackPills.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { createBreadcrumbSchema, createProjectSchema } from '../../lib/seo';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -22,9 +23,19 @@ const { Content } = await project.render();
 
 const pageTitle = `${project.data.title} | Projects | JP Davalos`;
 const pageDescription = project.data.summary;
+const schema = Astro.site
+  ? [
+      createProjectSchema(Astro.site, project),
+      createBreadcrumbSchema(Astro.site, [
+        { name: 'Home', path: '/' },
+        { name: 'Projects', path: '/projects' },
+        { name: project.data.title, path: `/projects/${project.slug}` },
+      ]),
+    ]
+  : undefined;
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription} schema={schema}>
   <div class="space-y-8">
     <a
       href="/projects"

@@ -4,13 +4,37 @@ import ExperienceCard from '../../components/cards/ExperienceCard.astro';
 import ExperienceSubnav from '../../components/nav/ExperienceSubnav.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { compareExperienceStartDesc } from '../../lib/collections';
+import {
+  createBreadcrumbSchema,
+  createExperienceCollectionSchema,
+} from '../../lib/seo';
 
 const items = (await getCollection('experience'))
   .filter((entry) => entry.data.type === 'research')
   .sort(compareExperienceStartDesc);
+const schema = Astro.site
+  ? [
+      createExperienceCollectionSchema(
+        Astro.site,
+        '/experience/research',
+        'Research Experience',
+        'Research-focused experience entries.',
+        items,
+      ),
+      createBreadcrumbSchema(Astro.site, [
+        { name: 'Home', path: '/' },
+        { name: 'Experience', path: '/experience' },
+        { name: 'Research', path: '/experience/research' },
+      ]),
+    ]
+  : undefined;
 ---
 
-<BaseLayout title="Research Experience | JP Davalos" description="Research experience entries.">
+<BaseLayout
+  title="Research Experience | JP Davalos"
+  description="Research experience entries."
+  schema={schema}
+>
   <div class="space-y-8">
     <header class="space-y-3">
       <p class="text-sm text-[var(--muted)]">Experience</p>

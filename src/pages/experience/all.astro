@@ -4,6 +4,10 @@ import ExperienceCard from '../../components/cards/ExperienceCard.astro';
 import ExperienceSubnav from '../../components/nav/ExperienceSubnav.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { compareExperienceStartDesc } from '../../lib/collections';
+import {
+  createBreadcrumbSchema,
+  createExperienceCollectionSchema,
+} from '../../lib/seo';
 
 const experiences = (await getCollection('experience')).sort(
   compareExperienceStartDesc,
@@ -19,9 +23,29 @@ const grouped = experiences.reduce<
 }, {});
 
 const years = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+const schema = Astro.site
+  ? [
+      createExperienceCollectionSchema(
+        Astro.site,
+        '/experience/all',
+        'All Experience',
+        'All experience entries grouped by year.',
+        experiences,
+      ),
+      createBreadcrumbSchema(Astro.site, [
+        { name: 'Home', path: '/' },
+        { name: 'Experience', path: '/experience' },
+        { name: 'All Experience', path: '/experience/all' },
+      ]),
+    ]
+  : undefined;
 ---
 
-<BaseLayout title="All Experience | JP Davalos" description="All experience entries grouped by year.">
+<BaseLayout
+  title="All Experience | JP Davalos"
+  description="All experience entries grouped by year."
+  schema={schema}
+>
   <div class="space-y-8">
     <header class="space-y-3">
       <p class="text-sm text-[var(--muted)]">Experience</p>
