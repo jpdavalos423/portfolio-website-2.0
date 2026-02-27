@@ -1,5 +1,0 @@
-exclude:
-  - src/
-  - node_modules/
-  - dist/
-  - .astro/

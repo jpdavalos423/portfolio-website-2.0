@@ -118,23 +118,41 @@ For each `poster` image, add responsive variants in `public/demos/posters/`:
 
 Also register the base poster dimensions in `src/lib/posterImages.ts` so generated `srcset` metadata has correct width/height.
 
-## Deploy
+## Deploy (Cloudflare Workers)
 
-This repo currently uses Astro’s default static output (no SSR adapter). Deploy as a static site from `dist/`.
+This repo uses the `@astrojs/cloudflare` adapter and deploys as a Cloudflare Worker.
 
 ### Pre-deploy checks
 
 ```bash
 pnpm lint
+pnpm check
 pnpm build
+```
+
+### Local Worker preview
+
+```bash
 pnpm preview
 ```
 
-### Host Settings (Vercel / Netlify / Cloudflare Pages / similar)
+### Deploy from local machine
 
-- Install command: `pnpm install --frozen-lockfile`
-- Build command: `pnpm build`
-- Output directory: `dist`
-- Node version: 20+
+```bash
+pnpm deploy
+```
 
-No runtime environment variables are required by the current codebase.
+### GitHub Actions deployment
+
+The workflow at `.github/workflows/deploy-cloudflare.yml` deploys on pushes to `main`.
+
+Required repository secrets:
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+### Wrangler config
+
+Runtime configuration lives in `wrangler.jsonc`.
+
+If your deployment logs include `Invalid binding "SESSION"`, add a KV binding named `SESSION` in `wrangler.jsonc` and in your Cloudflare account.
