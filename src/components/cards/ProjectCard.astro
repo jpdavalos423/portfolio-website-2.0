@@ -13,6 +13,8 @@ const { project, interactive = false } = Astro.props;
 const href = `/projects/${project.slug}`;
 const highlights = project.data.highlights.slice(0, 3);
 const posterAttrs = getPosterImageAttrs(project.data.poster);
+const posterPosition =
+  project.slug === 'portfolio-website-v1' ? '20% center' : undefined;
 ---
 
 <article
@@ -30,6 +32,7 @@ const posterAttrs = getPosterImageAttrs(project.data.poster);
           title={project.data.title}
           demoWebm={project.data.demoWebm}
           demoMp4={project.data.demoMp4}
+          posterPosition={posterPosition}
         />
       ) : (
         <div class="overflow-hidden rounded-xl bg-black/30">
@@ -42,6 +45,7 @@ const posterAttrs = getPosterImageAttrs(project.data.poster);
             height={posterAttrs.height}
             loading="lazy"
             decoding="async"
+            style={posterPosition ? `object-position: ${posterPosition};` : undefined}
             class="aspect-[16/10] w-full object-cover transition-[filter] duration-300 ease-out motion-safe:group-hover:brightness-90"
           />
         </div>

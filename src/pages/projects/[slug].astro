@@ -20,6 +20,8 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await project.render();
+const posterPosition =
+  project.slug === 'portfolio-website-v1' ? 'left center' : undefined;
 
 const pageTitle = `${project.data.title} | Projects | JP Davalos`;
 const pageDescription = project.data.summary;
@@ -64,6 +66,7 @@ const schema = Astro.site
             alt={`${project.data.title} poster`}
             loading="lazy"
             decoding="async"
+            style={posterPosition ? `object-position: ${posterPosition};` : undefined}
             class="aspect-[16/10] w-full object-cover"
           />
         </figure>
