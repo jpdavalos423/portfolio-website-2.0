@@ -84,7 +84,8 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
     let pointerY = 0;
     let isTrackingPointer = false;
 
-    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const clamp = (value: number, min: number, max: number): number =>
+      Math.min(max, Math.max(min, value));
 
     const updateGlowPosition = () => {
       frame = 0;
@@ -105,7 +106,7 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
       scope.style.setProperty('--site-glow-y', `${yPercent}%`);
     };
 
-    const queueGlowUpdate = (x, y) => {
+    const queueGlowUpdate = (x: number, y: number): void => {
       pointerX = x;
       pointerY = y;
       if (frame !== 0) {
@@ -114,14 +115,14 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
       frame = window.requestAnimationFrame(updateGlowPosition);
     };
 
-    const onPointerMove = (event) => {
+    const onPointerMove = (event: PointerEvent): void => {
       if (document.hidden || event.pointerType === 'touch') {
         return;
       }
       queueGlowUpdate(event.clientX, event.clientY);
     };
 
-    const onPointerEnter = (event) => {
+    const onPointerEnter = (event: PointerEvent): void => {
       if (event.pointerType === 'touch') {
         return;
       }
@@ -137,7 +138,7 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
       queueGlowUpdate(event.clientX, event.clientY);
     };
 
-    const onPointerLeave = (event) => {
+    const onPointerLeave = (event: PointerEvent): void => {
       if (event.pointerType === 'touch') {
         return;
       }

@@ -12,7 +12,8 @@ const href = `/experience/${experience.slug}`;
 const endLabel = experience.data.present ? 'Present' : experience.data.end;
 const period = `${experience.data.start} - ${endLabel}`;
 const highlights = experience.data.highlights.slice(0, 3);
-const typeLabel = experience.data.type === 'industry' ? 'professional' : experience.data.type;
+const typeLabel =
+  experience.data.type === 'industry' ? 'professional' : experience.data.type;
 ---
 
 <article

@@ -32,13 +32,8 @@ export default function HoverPreview({
 
     updatePreference();
 
-    if (typeof mediaQuery.addEventListener === 'function') {
-      mediaQuery.addEventListener('change', updatePreference);
-      return () => mediaQuery.removeEventListener('change', updatePreference);
-    }
-
-    mediaQuery.addListener(updatePreference);
-    return () => mediaQuery.removeListener(updatePreference);
+    mediaQuery.addEventListener('change', updatePreference);
+    return () => mediaQuery.removeEventListener('change', updatePreference);
   }, []);
 
   const activatePreview = useCallback(() => {
@@ -105,6 +100,7 @@ export default function HoverPreview({
   const showVideo = hasDemo && shouldLoadVideo && !isReducedMotion;
 
   return (
+    /* biome-ignore lint/a11y/noStaticElementInteractions: This hover-only preview sits inside a parent link and is intentionally not focusable. */
     <div
       ref={containerRef}
       className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-black/30"
