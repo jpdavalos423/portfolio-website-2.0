@@ -3,13 +3,27 @@ import { getCollection } from 'astro:content';
 import ProjectCard from '../../components/cards/ProjectCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { compareProjectDateDesc } from '../../lib/collections';
+import {
+  createBreadcrumbSchema,
+  createProjectsCollectionSchema,
+} from '../../lib/seo';
 
 const projects = (await getCollection('projects')).sort(compareProjectDateDesc);
+const schema = Astro.site
+  ? [
+      createProjectsCollectionSchema(Astro.site, projects),
+      createBreadcrumbSchema(Astro.site, [
+        { name: 'Home', path: '/' },
+        { name: 'Projects', path: '/projects' },
+      ]),
+    ]
+  : undefined;
 ---
 
 <BaseLayout
   title="Projects | JP Davalos"
   description="Software projects by JP Davalos with interactive hover previews on the projects index."
+  schema={schema}
 >
   <section class="space-y-3" aria-labelledby="projects-page-heading">
     <h1 id="projects-page-heading" class="text-5xl font-semibold tracking-tight sm:text-6xl">
