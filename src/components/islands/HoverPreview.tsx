@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getPosterImageAttrs } from '../../lib/posterImages';
 
 type HoverPreviewProps = {
@@ -14,6 +14,7 @@ export default function HoverPreview({
   demoWebm,
   demoMp4,
 }: HoverPreviewProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
@@ -60,7 +61,7 @@ export default function HoverPreview({
     }
   }, [hasDemo, isActive, isReducedMotion, shouldLoadVideo]);
 
-  const activatePreview = () => {
+  const activatePreview = useCallback(() => {
     if (!hasDemo || isReducedMotion) {
       return;
     }
@@ -70,20 +71,34 @@ export default function HoverPreview({
     }
 
     setIsActive(true);
-  };
+  }, [hasDemo, isReducedMotion, shouldLoadVideo]);
 
-  const deactivatePreview = () => {
+  const deactivatePreview = useCallback(() => {
     setIsActive(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) {
+      return;
+    }
+
+    container.addEventListener('mouseenter', activatePreview);
+    container.addEventListener('mouseleave', deactivatePreview);
+
+    return () => {
+      container.removeEventListener('mouseenter', activatePreview);
+      container.removeEventListener('mouseleave', deactivatePreview);
+    };
+  }, [activatePreview, deactivatePreview]);
 
   const showVideo = hasDemo && shouldLoadVideo && !isReducedMotion;
 
   return (
     <div
+      ref={containerRef}
       className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-black/30"
       data-has-demo={hasDemo ? 'true' : 'false'}
-      onMouseEnter={activatePreview}
-      onMouseLeave={deactivatePreview}
     >
       <img
         src={poster}
