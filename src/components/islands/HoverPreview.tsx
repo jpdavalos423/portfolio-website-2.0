@@ -74,6 +74,7 @@ export default function HoverPreview({
   const showVideo = hasDemo && shouldLoadVideo && !isReducedMotion;
 
   return (
+    /* biome-ignore lint/a11y/noStaticElementInteractions: This hover-only preview sits inside a parent link and is intentionally not focusable. */
     <div
       className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-black/30"
       data-has-demo={hasDemo ? 'true' : 'false'}
