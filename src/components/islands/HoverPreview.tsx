@@ -116,11 +116,7 @@ export default function HoverPreview({
         decoding="async"
         className={`absolute inset-0 block h-full w-full object-cover transition-[opacity,filter] duration-300 ease-out ${
           showVideo && isActive ? 'opacity-0' : 'opacity-100'
-        } ${
-          !hasDemo
-            ? 'motion-safe:group-hover:brightness-90'
-            : ''
-        }`}
+        } ${!hasDemo ? 'motion-safe:group-hover:brightness-90' : ''}`}
       />
 
       {showVideo ? (
