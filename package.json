@@ -6,11 +6,13 @@
   "scripts": {
     "dev": "NODE_ENV=development astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "pnpm run build && wrangler dev",
     "astro": "astro",
     "lint": "biome check astro.config.mjs biome.json package.json src/content.config.ts src/components/islands src/lib src/styles tsconfig.json",
     "format": "biome format --write astro.config.mjs biome.json package.json src tsconfig.json",
-    "check": "astro check"
+    "check": "astro check",
+    "deploy": "pnpm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.12",
