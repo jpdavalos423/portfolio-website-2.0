@@ -36,18 +36,24 @@ const formatTypeLabel = (entry: CollectionEntry<'experience'>) =>
 
   <ul class="space-y-3">
     {items.map((entry) => (
-      <li class="rounded-xl bg-[var(--surface)] px-4 py-3">
+      <li
+        class="group rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 transition-all duration-200 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-white/15 motion-safe:hover:shadow-[0_10px_24px_rgb(0_0_0_/_0.22)] focus-within:-translate-y-0.5 focus-within:border-white/15 focus-within:shadow-[0_10px_24px_rgb(0_0_0_/_0.22)]"
+      >
         <a
           href={`/experience/${entry.slug}`}
           class="block space-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface)]"
         >
           <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <span class="text-sm font-medium text-[var(--text)]">{entry.data.role}</span>
+            <span class="text-sm font-medium text-[var(--text)] transition-colors duration-200 group-hover:text-[var(--accent)] group-focus-within:text-[var(--accent)]">
+              {entry.data.role}
+            </span>
             <span class="text-sm text-[var(--muted)]">@ {entry.data.org}</span>
           </div>
           <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--muted)]">
             <span>{formatPeriod(entry)}</span>
-            <span class="uppercase tracking-wide text-[var(--accent)]">{formatTypeLabel(entry)}</span>
+            <span class="uppercase tracking-wide text-[var(--accent)] transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 opacity-85">
+              {formatTypeLabel(entry)}
+            </span>
           </div>
         </a>
       </li>

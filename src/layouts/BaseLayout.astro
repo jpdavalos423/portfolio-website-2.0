@@ -101,7 +101,6 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
     let frame = 0;
     let pointerX = 0;
     let pointerY = 0;
-    let isTrackingPointer = false;
 
     const clamp = (value: number, min: number, max: number): number =>
       Math.min(max, Math.max(min, value));
@@ -138,6 +137,9 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
       if (document.hidden || event.pointerType === 'touch') {
         return;
       }
+
+      scope.style.setProperty('--site-glow-opacity', ACTIVE_OPACITY);
+      glow.style.opacity = '1';
       queueGlowUpdate(event.clientX, event.clientY);
     };
 
@@ -148,11 +150,6 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
 
       scope.style.setProperty('--site-glow-opacity', ACTIVE_OPACITY);
       glow.style.opacity = '1';
-
-      if (!isTrackingPointer) {
-        scope.addEventListener('pointermove', onPointerMove, { passive: true });
-        isTrackingPointer = true;
-      }
 
       queueGlowUpdate(event.clientX, event.clientY);
     };
@@ -165,17 +162,13 @@ const ogImageUrl = Astro.site && ogImage ? new URL(ogImage, Astro.site).toString
       glow.style.opacity = '0';
       scope.style.setProperty('--site-glow-opacity', '0');
 
-      if (isTrackingPointer) {
-        scope.removeEventListener('pointermove', onPointerMove);
-        isTrackingPointer = false;
-      }
-
       if (frame !== 0) {
         window.cancelAnimationFrame(frame);
         frame = 0;
       }
     };
 
+    scope.addEventListener('pointermove', onPointerMove, { passive: true });
     scope.addEventListener('pointerenter', onPointerEnter);
     scope.addEventListener('pointerleave', onPointerLeave);
   })();
