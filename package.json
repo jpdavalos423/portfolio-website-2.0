@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "biome check astro.config.mjs biome.json package.json src tsconfig.json",
-    "format": "biome format --write astro.config.mjs biome.json package.json src tsconfig.json"
+    "format": "biome format --write astro.config.mjs biome.json package.json src tsconfig.json",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -22,6 +23,8 @@
     "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.4"
+    "@astrojs/check": "^0.9.6",
+    "@biomejs/biome": "^2.4.4",
+    "typescript": "^5.9.3"
   }
 }

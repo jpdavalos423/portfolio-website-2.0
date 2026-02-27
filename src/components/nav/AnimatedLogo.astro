@@ -22,8 +22,9 @@ const ARROW_PATH =
 <script>
   const SAMPLE_COUNT = 96;
   const DURATION_MS = 280;
+  type Point = [number, number];
 
-  const ease = (t) => {
+  const ease = (t: number): number => {
     const p1x = 0.22;
     const p1y = 1;
     const p2x = 0.36;
@@ -34,9 +35,9 @@ const ARROW_PATH =
     const cy = 3 * p1y;
     const by = 3 * (p2y - p1y) - cy;
     const ay = 1 - cy - by;
-    const sampleX = (u) => ((ax * u + bx) * u + cx) * u;
-    const sampleY = (u) => ((ay * u + by) * u + cy) * u;
-    const sampleDX = (u) => (3 * ax * u + 2 * bx) * u + cx;
+    const sampleX = (u: number): number => ((ax * u + bx) * u + cx) * u;
+    const sampleY = (u: number): number => ((ay * u + by) * u + cy) * u;
+    const sampleDX = (u: number): number => (3 * ax * u + 2 * bx) * u + cx;
 
     let u = t;
     for (let i = 0; i < 6; i += 1) {
@@ -52,7 +53,7 @@ const ARROW_PATH =
     return sampleY(u);
   };
 
-  const toPath = (points) => {
+  const toPath = (points: Point[]): string => {
     if (!points.length) return '';
     let d = `M${points[0][0]} ${points[0][1]}`;
     for (let i = 1; i < points.length; i += 1) {
@@ -61,30 +62,30 @@ const ARROW_PATH =
     return `${d}Z`;
   };
 
-  const samplePoints = (pathNode, count) => {
+  const samplePoints = (pathNode: SVGPathElement, count: number): Point[] => {
     const length = pathNode.getTotalLength();
-    const points = [];
+    const points: Point[] = [];
     for (let i = 0; i < count; i += 1) {
       const t = i / (count - 1);
       const point = pathNode.getPointAtLength(t * length);
-      points.push([point.x, point.y]);
+      points.push([point.x, point.y] as Point);
     }
     return points;
   };
 
-  const rotate = (points, shift) => {
+  const rotate = (points: Point[], shift: number): Point[] => {
     const len = points.length;
     if (!len) return points;
     const offset = ((shift % len) + len) % len;
     return points.slice(offset).concat(points.slice(0, offset));
   };
 
-  const alignPoints = (source, target) => {
+  const alignPoints = (source: Point[], target: Point[]): Point[] => {
     const stride = 6;
     let best = target;
     let bestScore = Number.POSITIVE_INFINITY;
 
-    const scoreCandidate = (candidate) => {
+    const scoreCandidate = (candidate: Point[]): number => {
       let sum = 0;
       for (let i = 0; i < source.length; i += stride) {
         const dx = source[i][0] - candidate[i][0];
@@ -109,8 +110,8 @@ const ARROW_PATH =
     return best;
   };
 
-  const interpolate = (from, to, progress) => {
-    const points = [];
+  const interpolate = (from: Point[], to: Point[], progress: number): Point[] => {
+    const points: Point[] = [];
     for (let i = 0; i < from.length; i += 1) {
       points.push([
         from[i][0] + (to[i][0] - from[i][0]) * progress,
@@ -120,11 +121,11 @@ const ARROW_PATH =
     return points;
   };
 
-  const setupMorph = (svg) => {
-    const shape = svg.querySelector('.animated-logo__shape');
-    const logoSource = svg.querySelector('.animated-logo__logo-source');
-    const arrowSource = svg.querySelector('.animated-logo__arrow-source');
-    const trigger = svg.closest('.logo-trigger');
+  const setupMorph = (svg: SVGSVGElement): void => {
+    const shape = svg.querySelector<SVGPathElement>('.animated-logo__shape');
+    const logoSource = svg.querySelector<SVGPathElement>('.animated-logo__logo-source');
+    const arrowSource = svg.querySelector<SVGPathElement>('.animated-logo__arrow-source');
+    const trigger = svg.closest<HTMLElement>('.logo-trigger');
     if (!shape || !logoSource || !arrowSource || !trigger) return;
 
     if (matchMedia('(hover: none)').matches) return;
@@ -144,13 +145,13 @@ const ARROW_PATH =
     let startTime = 0;
     let frame = 0;
 
-    const render = (nextProgress) => {
+    const render = (nextProgress: number): void => {
       progress = nextProgress;
       const points = interpolate(fromPoints, toPoints, progress);
       shape.setAttribute('d', toPath(points));
     };
 
-    const tick = (time) => {
+    const tick = (time: number): void => {
       const elapsed = time - startTime;
       const ratio = Math.min(1, elapsed / DURATION_MS);
       const eased = ease(ratio);
@@ -162,7 +163,7 @@ const ARROW_PATH =
       }
     };
 
-    const animateTo = (nextTarget) => {
+    const animateTo = (nextTarget: number): void => {
       if (nextTarget === target && frame) return;
       target = nextTarget;
       startProgress = progress;
@@ -179,7 +180,7 @@ const ARROW_PATH =
     trigger.addEventListener('blur', () => animateTo(0));
   };
 
-  for (const svg of document.querySelectorAll('.animated-logo')) {
+  for (const svg of document.querySelectorAll<SVGSVGElement>('.animated-logo')) {
     setupMorph(svg);
   }
 </script>
