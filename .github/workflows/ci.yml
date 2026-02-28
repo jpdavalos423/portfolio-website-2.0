@@ -30,11 +30,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
+      - name: Lint (Biome)
+        run: pnpm lint:biome
+
+      - name: Lint (Astro)
+        run: pnpm lint:astro
 
       - name: Build
         run: pnpm build
-
-      - name: Astro check
-        run: pnpm check
