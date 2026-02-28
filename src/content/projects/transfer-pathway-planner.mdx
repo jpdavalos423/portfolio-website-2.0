@@ -6,8 +6,69 @@ summary: Web app for students that generates community-college-to-UC Computer Sc
 stack:
   - React
   - TypeScript
-  - SQL
-  - FastAPI
+  - Python
+  - Vite
+  - Vitest
+techStack:
+  sections:
+    - title: Frontend
+      items:
+        - name: React
+          description: Core UI framework for building interactive planner flows and reusable interface components.
+        - name: TypeScript
+          description: Strong typing across UI and API contracts to reduce runtime integration bugs.
+        - name: Vite
+          description: Fast dev server and build pipeline for frontend development.
+        - name: React Router DOM
+          description: Client-side routing for planner views and navigation flows.
+    - title: Frontend Testing
+      items:
+        - name: Vitest
+          description: Unit test runner for frontend logic and component behavior.
+        - name: Testing Library (React)
+          description: User-centric component tests for real interaction flows.
+        - name: jsdom
+          description: DOM emulation layer for browser-like frontend tests in Node.
+    - title: API Server
+      items:
+        - name: Python stdlib HTTP server
+          description: Runtime API server built on ThreadingHTTPServer and BaseHTTPRequestHandler with no web framework dependency.
+        - name: REST endpoints
+          description: Exposes pathway generation, metadata, health, and metrics routes used by the frontend.
+        - name: CORS and request IDs
+          description: Custom CORS handling and per-request UUID tracking for cross-origin reliability and debugging.
+        - name: In-process APIMetrics
+          description: Lightweight runtime metrics collection for observability and reliability checks.
+    - title: Backend Planner Core
+      items:
+        - name: Python 3.10+ core modules
+          description: Planner logic implemented in stdlib-focused Python for deterministic execution.
+        - name: planner_core package
+          description: Contains pathway planning, sorting utilities, and stub planner implementations.
+        - name: data_adapter package
+          description: Loads and normalizes source datasets for planner execution.
+        - name: shared_types package
+          description: Shared cross-language type contract consumed by Python and TypeScript via path aliases.
+    - title: Data Pipeline & Scraping
+      items:
+        - name: Python scraping scripts
+          description: Collects transfer agreement data from source systems for planner inputs.
+        - name: CSV to JSON pipeline
+          description: Converts raw district and course datasets into planner-ready JSON artifacts.
+        - name: Validation and parity scripts
+          description: Includes golden bootstrap, parity gates, performance benchmarks, and reliability checks.
+    - title: Tooling & Testing
+      items:
+        - name: Ruff
+          description: Linting and import sorting with a py310 target and consistent style enforcement.
+        - name: mypy
+          description: Static type checking for Python correctness and contract safety.
+        - name: Python test suites
+          description: Coverage across API, planner core, data adapter, golden/parity, and performance scenarios.
+        - name: Node test runner
+          description: Additional API-client error mapping coverage alongside frontend Vitest suites.
+        - name: FastAPI + Uvicorn (optional)
+          description: Migration/variant runtime option kept outside the default stdlib server path.
 highlights:
   - Built a full-stack web app that generates customized transfer plans for California community college CS students.
   - Implemented backend scheduling logic to validate prerequisites and optimize course sequencing across terms.
@@ -28,7 +89,7 @@ Transfer planning is fragmented across dozens of curriculum pages, articulation 
 
 ## What I Built
 
-A student-facing planner with a React and TypeScript frontend backed by FastAPI services and SQL-driven program data. Users can explore pathway recommendations, validate course selections against prerequisite rules, and adjust their plans with immediate feedback from backend validation logic.
+A student-facing planner with a React and TypeScript frontend backed by a Python API layer and dataset-driven planning services. Users can explore pathway recommendations, validate course selections against prerequisite rules, and adjust their plans with immediate feedback from backend validation logic.
 
 ## Technical Decisions
 

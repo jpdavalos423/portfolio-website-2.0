@@ -4,10 +4,61 @@ date: "2025-02"
 featured: true
 summary: Interactive learning tool for visualizing data structures and algorithms step by step.
 stack:
-  - TypeScript
   - React
+  - TypeScript
   - Vite
-  - Tailwind
+  - Tailwind CSS
+  - Framer Motion
+techStack:
+  sections:
+    - title: Frontend Foundation
+      items:
+        - name: React 18
+          description: Component-driven UI architecture for interactive algorithm views and reusable controls.
+        - name: TypeScript
+          description: Strong typing for algorithm state, visualization props, and reusable utility logic.
+        - name: Vite
+          description: Fast local development and production bundling for a responsive iteration loop.
+        - name: "@vitejs/plugin-react-swc"
+          description: SWC-powered React transform support for fast builds and refresh performance.
+    - title: UI, Styling & Motion
+      items:
+        - name: Tailwind CSS
+          description: Utility-first styling system for consistent layouts and visualization state styling.
+        - name: Framer Motion
+          description: Smooth transitions and animated state changes for clearer step-by-step algorithm behavior.
+        - name: shadcn/ui + Radix UI
+          description: Accessible, composable UI primitives for controls, dialogs, and interaction patterns.
+        - name: Lucide React
+          description: Icon set used across interaction controls and visual affordances.
+        - name: clsx + tailwind-merge
+          description: Dynamic class composition and conflict-safe Tailwind utility merging.
+    - title: Application Libraries
+      items:
+        - name: React Router DOM
+          description: Client-side routing for multiple visualization pages and learning flows.
+        - name: TanStack React Query
+          description: Structured async state handling for fetched or computed data dependencies.
+        - name: React Hook Form + Zod
+          description: Typed form state and schema validation for user inputs and configuration controls.
+        - name: Recharts
+          description: Supplemental charting for data-driven visual analysis views.
+        - name: next-themes
+          description: Theme switching support for dark and light mode readability.
+        - name: embla-carousel-react
+          description: Carousel interactions for walkthrough or multi-panel educational content.
+        - name: sonner
+          description: Toast notifications for user feedback during interactions.
+        - name: date-fns
+          description: Utility helpers for date formatting and timeline-oriented UI metadata.
+    - title: Tooling
+      items:
+        - name: ESLint + TypeScript ESLint
+          description: Linting and type-aware rule enforcement for maintainable frontend code quality.
+        - name: PostCSS + Autoprefixer
+          description: CSS processing pipeline for cross-browser compatibility.
+        - name: lovable-tagger
+          description: Development workflow utility used within the project toolchain.
 highlights:
   - Visualizes sorting algorithms with step-by-step progression to aid student learning.
   - Designed to support algorithm intuition through interactive visuals rather than static notes.

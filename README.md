@@ -79,6 +79,7 @@ Each file in `src/content/projects/*.mdx` must include:
 | `featured` | `boolean` | Drives home page selection priority |
 | `summary` | `string` | Single line only |
 | `stack` | `string[]` | At least 1 item |
+| `techStack` | `{ sections: { title, items: { name, description }[] }[] }` | Optional, detail-page structured stack section |
 | `highlights` | `string[]` | Up to 3 items |
 | `poster` | `string` | Path in `public/` (e.g. `/demos/posters/foo.webp`) |
 | `links` | `{ label, url }[]` | At least 1 valid URL |

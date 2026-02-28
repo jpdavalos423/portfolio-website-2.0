@@ -5,8 +5,64 @@ featured: true
 summary: Pokemon card collection tracker for managing cards, viewing details, and checking market prices.
 stack:
   - JavaScript
-  - Pokemon TCG API
-  - MongoDB
+  - Express.js
+  - PostgreSQL
+  - TCGdex API
+  - Web Components
+techStack:
+  sections:
+    - title: Frontend
+      items:
+        - name: HTML5
+          description: Semantic page structure with reusable custom elements for project-specific UI blocks.
+        - name: CSS3
+          description: Plain CSS split into base and dark-mode stylesheets for predictable styling control.
+        - name: JavaScript (ES Modules)
+          description: Vanilla JavaScript modules power client logic without framework overhead.
+        - name: Web Components
+          description: Custom elements like binder and collection views keep UI features encapsulated.
+    - title: Backend
+      items:
+        - name: Node.js
+          description: Runtime for API services, auth flows, and server-side integration logic.
+        - name: Express.js
+          description: REST API routing layer for card, user, and collection endpoints.
+        - name: CORS middleware
+          description: Controlled cross-origin requests between frontend and API environments.
+    - title: Database
+      items:
+        - name: PostgreSQL
+          description: Primary persistence layer for accounts, saved cards, and collection data.
+        - name: pg driver
+          description: Direct database access from Node services with explicit query control.
+        - name: pgcrypto UUIDs
+          description: Database-level UUID generation for stable identifiers across tables.
+        - name: SQL migration scripts
+          description: Versioned schema changes managed through project-owned SQL migrations.
+    - title: Authentication & Security
+      items:
+        - name: JWT (Bearer tokens)
+          description: Stateless authentication for protected API requests.
+        - name: bcryptjs
+          description: Password hashing before storage to protect user credentials.
+    - title: External APIs
+      items:
+        - name: TCGdex API
+          description: Source of Pokemon card metadata and pricing context used by search flows.
+        - name: Card caching service
+          description: Local cache layer reduces repeated external API calls and speeds response times.
+    - title: Testing & Tooling
+      items:
+        - name: Jest
+          description: Core framework for unit and end-to-end test execution.
+        - name: Puppeteer
+          description: Browser automation for user-flow coverage in end-to-end scenarios.
+        - name: jsdom
+          description: DOM-like test environment for frontend unit tests without a real browser.
+        - name: Babel
+          description: Test-time transpilation support for modern JavaScript syntax.
+        - name: ESLint
+          description: Static linting to enforce consistency and catch common issues early.
 highlights:
   - Built as a team project using Agile collaboration practices and shared ownership across features.
   - Integrated the Pokemon TCG API to surface card metadata and market pricing information.

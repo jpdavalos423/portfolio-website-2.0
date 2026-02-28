@@ -4,10 +4,55 @@ date: "2024-03"
 featured: false
 summary: Real-time Spotify now-playing display optimized for a Raspberry Pi screen setup.
 stack:
-  - JavaScript
-  - Raspberry Pi
-  - Spotify Web API
+  - React
   - Node.js
+  - Express.js
+  - Spotify Web API
+  - Raspberry Pi
+techStack:
+  sections:
+    - title: Frontend
+      items:
+        - name: React 18
+          description: Functional component UI with hooks for stateful now-playing display updates.
+        - name: Create React App (react-scripts)
+          description: Development server and build tooling for the client application.
+        - name: JSX
+          description: Component-based rendering syntax for display and playback controls.
+        - name: Plain CSS
+          description: Custom styling via reset and app-specific stylesheets for clear always-on readability.
+        - name: Testing Library + Jest
+          description: UI testing utilities for frontend behavior verification.
+    - title: Backend
+      items:
+        - name: Node.js
+          description: Server runtime for Spotify integration and API handling.
+        - name: Express
+          description: REST API server exposing playback and metadata endpoints.
+        - name: Spotify Web API Node
+          description: Authenticated SDK client for current track retrieval and playback actions.
+        - name: dotenv
+          description: Environment-based credential and configuration management.
+        - name: nodemon
+          description: Development-time server auto-restart for faster iteration.
+    - title: API Integration
+      items:
+        - name: Spotify OAuth flow
+          description: Authorization flow for obtaining and refreshing tokens.
+        - name: Current track endpoints
+          description: Fetches song, artist, album, and artwork metadata for display.
+        - name: Playback control endpoints
+          description: Supports actions like play and pause through backend API routes.
+    - title: Architecture
+      items:
+        - name: Client-server separation
+          description: Frontend and backend are isolated with proxy-based communication.
+        - name: RESTful route design
+          description: Clear endpoint structure for track metadata, artist info, and playback actions.
+        - name: Polling update loop
+          description: Frontend polls every 3 seconds for near real-time display updates.
+        - name: Environment-based configuration
+          description: Runtime secrets and API credentials loaded from .env configuration.
 highlights:
   - Fetches and displays the currently playing song in real time using the Spotify API.
   - Handles Spotify authentication and token refresh flows for persistent access.

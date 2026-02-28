@@ -8,6 +8,18 @@ const linkSchema = z.object({
   url: z.string().url(),
 });
 
+const techStackSectionSchema = z.object({
+  title: z.string().min(1),
+  items: z
+    .array(
+      z.object({
+        name: z.string().min(1),
+        description: z.string().min(1),
+      }),
+    )
+    .min(1),
+});
+
 export const projectsCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -24,6 +36,11 @@ export const projectsCollection = defineCollection({
         'summary must be a single line',
       ),
     stack: z.array(z.string().min(1)).min(1),
+    techStack: z
+      .object({
+        sections: z.array(techStackSectionSchema).min(1),
+      })
+      .optional(),
     highlights: z.array(z.string().min(1)).max(3),
     poster: z.string().min(1),
     links: z.array(linkSchema).min(1),

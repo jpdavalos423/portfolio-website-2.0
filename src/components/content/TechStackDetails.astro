@@ -1,0 +1,63 @@
+---
+interface TechStackItem {
+  name: string;
+  description: string;
+}
+
+interface TechStackSection {
+  title: string;
+  items: TechStackItem[];
+}
+
+interface Props {
+  sections: TechStackSection[];
+}
+
+const { sections } = Astro.props;
+---
+
+{
+  sections.length > 0 && (
+    <section aria-labelledby="project-tech-stack-heading">
+      <h2
+        id="project-tech-stack-heading"
+        class="mb-3 mt-8 text-2xl font-semibold tracking-tight text-[var(--text)]"
+      >
+        Tech Stack
+      </h2>
+
+      <div class="space-y-6">
+        {sections.map((section) => (
+          <details class="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
+            <summary class="cursor-pointer list-none text-lg font-medium tracking-tight text-[var(--text)]">
+              <span class="inline-flex items-center gap-2">
+                <span aria-hidden="true" class="text-sm text-[var(--muted)] transition-transform details-arrow">
+                  ▶
+                </span>
+                <span>{section.title}</span>
+              </span>
+            </summary>
+            <ul class="mt-3 list-disc space-y-2 pl-5">
+              {section.items.map((item) => (
+                <li class="text-sm leading-7 text-[var(--muted)]">
+                  <strong class="font-medium text-[var(--text)]">{item.name}:</strong>{' '}
+                  {item.description}
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details[open] .details-arrow {
+    transform: rotate(90deg);
+  }
+</style>
