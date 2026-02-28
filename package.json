@@ -8,8 +8,10 @@
     "build": "astro build",
     "preview": "pnpm run build && wrangler dev",
     "astro": "astro",
-    "lint": "biome check astro.config.mjs biome.json package.json src/content.config.ts src/components/islands src/lib src/styles tsconfig.json",
-    "format": "biome format --write astro.config.mjs biome.json package.json src tsconfig.json",
+    "lint": "pnpm lint:biome && pnpm lint:astro",
+    "lint:biome": "biome check astro.config.mjs biome.json package.json tsconfig.json src/content.config.ts src/components/islands src/lib src/styles src/content src/pages/robots.txt.ts src/pages/sitemap.xml.ts",
+    "lint:astro": "astro check",
+    "format": "biome format --write astro.config.mjs biome.json package.json tsconfig.json src/content.config.ts src/components/islands src/lib src/styles src/content src/pages/robots.txt.ts src/pages/sitemap.xml.ts",
     "check": "astro check",
     "deploy": "pnpm run build && wrangler deploy",
     "cf-typegen": "wrangler types"
