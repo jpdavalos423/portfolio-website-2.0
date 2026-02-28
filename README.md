@@ -34,8 +34,11 @@ Dev server runs at `http://localhost:4321`.
 | `pnpm dev` | Start local Astro dev server (`NODE_ENV=development`) |
 | `pnpm build` | Build static production output to `dist/` |
 | `pnpm preview` | Preview the built site locally |
-| `pnpm lint` | Run Biome checks across config and `src/` |
-| `pnpm format` | Apply Biome formatting |
+| `pnpm lint` | Run all lint checks (`lint:biome` then `lint:astro`) |
+| `pnpm lint:biome` | Run Biome on JS/TS/CSS/MDX and config files (excludes `.astro`) |
+| `pnpm lint:astro` | Run `astro check` for `.astro` and framework diagnostics |
+| `pnpm check` | Alias for `astro check` (backward compatibility) |
+| `pnpm format` | Apply Biome formatting to JS/TS/CSS/MDX and config files |
 
 ## Project Layout
 
@@ -125,8 +128,8 @@ This repo uses the `@astrojs/cloudflare` adapter and deploys as a Cloudflare Wor
 ### Pre-deploy checks
 
 ```bash
-pnpm lint
-pnpm check
+pnpm lint:biome
+pnpm lint:astro
 pnpm build
 ```
 
