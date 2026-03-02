@@ -3,6 +3,7 @@ const POSTER_DIMENSIONS: Record<string, { width: number; height: number }> = {
   '/demos/posters/now-playing-display.webp': { width: 1645, height: 921 },
   '/demos/posters/pokecollect.webp': { width: 3046, height: 1526 },
   '/demos/posters/portfolio-website-v1.webp': { width: 2870, height: 1338 },
+  '/demos/posters/path-layer.webp': { width: 2880, height: 2332 },
   '/demos/posters/transfer-pathway-planner.webp': { width: 1600, height: 1000 },
 };
 

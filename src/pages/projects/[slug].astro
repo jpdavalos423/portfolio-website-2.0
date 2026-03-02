@@ -24,7 +24,21 @@ const { Content } = await project.render();
 const techStackSections = project.data.techStack?.sections ?? [];
 const hasTechStack = techStackSections.length > 0;
 const posterPosition =
-  project.slug === 'portfolio-website-v1' ? 'left center' : undefined;
+  project.slug === 'portfolio-website-v1'
+    ? 'left center'
+    : project.slug === 'path-layer'
+      ? 'left top'
+      : undefined;
+const posterScale = project.slug === 'path-layer' ? 1.25 : undefined;
+const posterStyle =
+  posterPosition || posterScale
+    ? [
+        posterPosition ? `object-position: ${posterPosition};` : '',
+        posterScale ? `transform: scale(${posterScale}); transform-origin: top left;` : '',
+      ]
+        .filter(Boolean)
+        .join(' ')
+    : undefined;
 
 const pageTitle = `${project.data.title} | Projects | JP Davalos`;
 const pageDescription = project.data.summary;
@@ -69,7 +83,7 @@ const schema = Astro.site
             alt={`${project.data.title} poster`}
             loading="lazy"
             decoding="async"
-            style={posterPosition ? `object-position: ${posterPosition};` : undefined}
+            style={posterStyle}
             class="aspect-[16/10] w-full object-cover"
           />
         </figure>

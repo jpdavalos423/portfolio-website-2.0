@@ -1,0 +1,78 @@
+---
+title: PathLayer
+date: "2026-02"
+featured: true
+summary: Graph engine that traces the shortest introduction path through your professional network.
+stack:
+  - Next.js
+  - React
+  - TypeScript
+  - Tailwind CSS
+  - React Flow
+techStack:
+  sections:
+    - title: Frontend
+      items:
+        - name: Next.js (App Router)
+          description: React framework configured for static export builds.
+        - name: React
+          description: Core UI runtime for interactive graph exploration and panel state.
+        - name: Tailwind CSS
+          description: Utility-first styling with dark-mode support.
+        - name: React Flow
+          description: Interactive graph visualization for rendering referral paths.
+        - name: TypeScript
+          description: Strict typing across app logic, graph models, and UI contracts.
+    - title: Graph & Data
+      items:
+        - name: Client-side BFS + Dijkstra
+          description: Computes shortest-hop and minimum social-friction paths fully in-browser with no server or database.
+        - name: Zod
+          description: Runtime schema validation for network data integrity.
+        - name: Deterministic synthetic dataset
+          description: Seeded generation (20260227) stored at public/data/network.json for reproducible behavior.
+    - title: Quality & Testing
+      items:
+        - name: Vitest
+          description: Unit and integration testing for graph logic and app behavior.
+        - name: Playwright
+          description: End-to-end browser testing (Chromium) for key user flows.
+        - name: Testing Library
+          description: React component testing utilities focused on user interactions.
+        - name: ESLint
+          description: Linting and code quality enforcement.
+    - title: Tooling & Delivery
+      items:
+        - name: pnpm
+          description: Package manager for installs, scripts, and lockfile consistency.
+        - name: tsx
+          description: Direct TypeScript script execution for dataset generation and validation.
+        - name: Cloudflare Pages
+          description: Static deployment target from the out/ directory produced by next build.
+        - name: GitHub Actions
+          description: Runs quality checks plus smoke and full end-to-end suites on PRs, main pushes, and nightly schedules.
+highlights:
+  - BFS and Dijkstra run entirely client-side, computing shortest-hop and minimum social-friction paths through a synthetic professional network in real time.
+  - React Flow renders the computed path as a live, explorable graph with supporting panels for path details, node profiles, and candidate rankings.
+  - Builds to a fully static export with no backend required, deployable to Cloudflare Pages with a deterministic seed-generated dataset bundled at build time.
+poster: /demos/posters/path-layer.webp
+links:
+  - label: GitHub Repo
+    url: https://github.com/jpdavalos423/path-layer
+---
+
+## Overview
+
+PathLayer is a graph-based referral engine that maps a professional network and computes the optimal introduction route to reach a target contact. It supports shortest-hop routing and weighted routing based on social friction, then visualizes results in an interactive graph interface.
+
+## What I Built
+
+I built the full frontend system solo, including graph generation, path-finding logic, and interactive visualization. The app pairs algorithmic routing with explorable UI panels for path breakdowns, node context, and candidate prioritization.
+
+## Technical Decisions
+
+Core path-finding runs entirely in the browser to keep the experience real-time without backend latency. A deterministic seed-generated dataset is bundled at build time so static deployments behave predictably across environments while still supporting rich graph interactions.
+
+## Current Status
+
+This project is in active development and focused on expanding network realism, ranking signals, and UX clarity for professional-introduction workflows.

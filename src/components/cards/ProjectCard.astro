@@ -14,7 +14,21 @@ const href = `/projects/${project.slug}`;
 const highlights = project.data.highlights.slice(0, 3);
 const posterAttrs = getPosterImageAttrs(project.data.poster);
 const posterPosition =
-  project.slug === 'portfolio-website-v1' ? '20% center' : undefined;
+  project.slug === 'portfolio-website-v1'
+    ? '20% center'
+    : project.slug === 'path-layer'
+      ? 'left top'
+      : undefined;
+const posterScale = project.slug === 'path-layer' ? 1.25 : undefined;
+const posterStyle =
+  posterPosition || posterScale
+    ? [
+        posterPosition ? `object-position: ${posterPosition};` : '',
+        posterScale ? `transform: scale(${posterScale}); transform-origin: top left;` : '',
+      ]
+        .filter(Boolean)
+        .join(' ')
+    : undefined;
 ---
 
 <article
@@ -33,6 +47,7 @@ const posterPosition =
           demoWebm={project.data.demoWebm}
           demoMp4={project.data.demoMp4}
           posterPosition={posterPosition}
+          posterScale={posterScale}
         />
       ) : (
         <div class="overflow-hidden rounded-xl bg-black/30">
@@ -45,7 +60,7 @@ const posterPosition =
             height={posterAttrs.height}
             loading="lazy"
             decoding="async"
-            style={posterPosition ? `object-position: ${posterPosition};` : undefined}
+            style={posterStyle}
             class="aspect-[16/10] w-full object-cover transition-[filter] duration-300 ease-out motion-safe:group-hover:brightness-90"
           />
         </div>

@@ -7,6 +7,7 @@ type HoverPreviewProps = {
   demoWebm?: string;
   demoMp4?: string;
   posterPosition?: string;
+  posterScale?: number;
 };
 
 export default function HoverPreview({
@@ -15,6 +16,7 @@ export default function HoverPreview({
   demoWebm,
   demoMp4,
   posterPosition,
+  posterScale,
 }: HoverPreviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -101,6 +103,15 @@ export default function HoverPreview({
 
   const showVideo = hasDemo && shouldLoadVideo && !isReducedMotion;
 
+  const posterStyle =
+    posterPosition || posterScale
+      ? {
+          objectPosition: posterPosition,
+          transform: posterScale ? `scale(${posterScale})` : undefined,
+          transformOrigin: posterScale ? 'top left' : undefined,
+        }
+      : undefined;
+
   return (
     <div
       ref={containerRef}
@@ -116,7 +127,7 @@ export default function HoverPreview({
         height={posterAttrs.height}
         loading="lazy"
         decoding="async"
-        style={posterPosition ? { objectPosition: posterPosition } : undefined}
+        style={posterStyle}
         className={`absolute inset-0 block h-full w-full object-cover transition-[opacity,filter] duration-300 ease-out ${
           showVideo && isActive ? 'opacity-0' : 'opacity-100'
         } ${!hasDemo ? 'motion-safe:group-hover:brightness-90' : ''}`}
